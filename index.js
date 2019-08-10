@@ -45,8 +45,21 @@ if (process.env.NODE_ENV != "production") {
 
 app.use(express.static("./public"));
 
-// const db = require("./utils/db");
+const sptfy = require("./utils/sptfy-middleware");
 // const bc = require("./utils/bc");
+
+///////////////////// GET ROUTES FOR WEBSITE ///////////////////////////
+
+app.get("/artistName/:artistName.json", async (req, res) => {
+    // console.log("My Request Body: ", req.body);
+    let artistName = req.params.artistName;
+
+    console.log("Getting Input from Seaching Artist Field!");
+    console.log("Artist Name: ", artistName);
+    console.log(sptfy.getArtist(artistName));
+});
+
+//////////////////// POST ROUTES FOR WEBSITE ////////////////////////////
 
 // !!!!!ALWAYS BE AT BOTTOM!!!!!
 app.get("*", function(req, res) {
