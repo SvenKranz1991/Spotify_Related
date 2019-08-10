@@ -1,0 +1,85 @@
+/*
+    temp colors
+    color: #111111;
+    background-color: #ffffff;
+    background-color: #dddddd;
+        background-color: #01ff70;
+        background-color: #7fdbff;
+        background-color: #ff4136;
+        background-color: #f012be;
+        background-color: #ffdc00;
+
+    border-bottom: 1px solid #cccccc;
+
+    box-shadow: 0px 0px 100vh 100vh rgba(0, 0, 0, 0.57);
+
+    Centering Stuff
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+ */
+
+* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    color: white;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    color: #111111;
+}
+
+/* Horizontal Line */
+
+h1 {
+    background-color: #01ff70;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* Button Temp */
+
+.horiLine {
+    width: 50vh;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 30px;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: white;
+    color: #111111;
+    border: 1px solid #cccccc;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.textInput {
+    text-align: center;
+    height: 4vh;
+    width: 30vh;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    outline: none;
+    border: 3px solid #cccccc;
+    resize: none;
+    border-radius: 20px;
+}
+
+.lighter {
+    font-weight: lighter;
+}
+
+.bolder {
+    font-weight: bolder;
+}
