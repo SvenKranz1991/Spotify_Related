@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    spotify_id VARCHAR(255) NOT NULL,
+    displayName VARCHAR(255) NOT NULL,
+    profileUrl VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
