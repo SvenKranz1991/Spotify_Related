@@ -9,6 +9,14 @@ export default class App extends React.Component {
         this.state = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmitForCreatingPlaylist = this.handleSubmitForCreatingPlaylist.bind(
+            this
+        );
+        this.handleChangeForCreatingPlaylist = this.handleChangeForCreatingPlaylist.bind(
+            this
+        );
+        this.clearSearch = this.clearSearch.bind(this);
+        this.getRelatedArtists = this.getRelatedArtists.bind(this);
     }
     componentDidMount() {
         axios.get("/access").then(result => {
@@ -23,29 +31,43 @@ export default class App extends React.Component {
                 displayname: result.data.user.displayname,
                 email: result.data.user.email,
                 profileUrl: result.data.user.profileurl,
-                photo: result.data.user.photo
+                photo: result.data.user.photo,
+                playListCreated: false,
+                showResultOfSearch: false,
+                linkToPlayList: ""
             });
         });
     }
     handleSubmit() {
-        // curl -X GET "https://api.spotify.com/v1/search?q=tania%20bowra&type=artist" -H "Authorization: Bearer {your access token}"
-        console.log("NameState: ", this.state.artistName);
         let artistName = this.state.artistName;
-        let url = `https://api.spotify.com/v1/search?q=${artistName}&type=artist`;
-        // axios.get(`/artistName/${artistName}.json`);
-        fetch(url, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${this.state.token}`
-            }
-        })
+
+        axios
+            .get(`/artistName/${artistName}.json`)
             .then(data => {
-                console.log("logmydata: ", data);
+                console.log("Data from Searching Artist: ", data);
+
+                if (data.data.ooops) {
+                    return this.setState({
+                        nothingFound: true
+                    });
+                }
+
+                let {
+                    IdOfArtist,
+                    SearchArtistName,
+                    SearchArtistPicture
+                } = data.data;
+
+                this.setState({
+                    IdOfArtist: IdOfArtist,
+                    SearchArtistName: SearchArtistName,
+                    SearchArtistPicture: SearchArtistPicture,
+                    showResultOfSearch: true,
+                    nothingFound: false
+                });
             })
             .catch(err => {
-                console.log("Error in getting Data: ", err);
+                console.log("Error in finding Artist: ", err);
             });
     }
     handleChange(e) {
@@ -54,6 +76,60 @@ export default class App extends React.Component {
             [e.target.name]: e.target.value
         });
     }
+    handleChangeForCreatingPlaylist(e) {
+        console.log("e: ", e.target.name, e.target.value);
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+    handleSubmitForCreatingPlaylist() {
+        console.log(
+            "NameState for Creating Playlist: ",
+            this.state.playlistName
+        );
+
+        let playListName = this.state.playlistName;
+
+        axios.get(`/createPlaylist/${playListName}.json`).then(data => {
+            let {
+                linkToPlayList,
+                playListId,
+                playListName,
+                playListUri
+            } = data.data;
+            console.log(
+                "Everything needed: ",
+                linkToPlayList,
+                playListId,
+                playListName,
+                playListUri
+            );
+            if (data) {
+                this.setState({
+                    linkToPlayList: linkToPlayList,
+                    playListUri: playListUri,
+                    playListName: playListName,
+                    playListId: playListId,
+                    playListCreated: true
+                });
+            }
+        });
+    }
+    clearSearch(e) {
+        console.log("Clicked");
+        this.setState({
+            showResultOfSearch: false,
+            IdOfArtist: "",
+            SearchArtistName: "",
+            SearchArtistPicture: ""
+        });
+    }
+    getRelatedArtists(e) {
+        console.log("Clicked");
+        let artistId = this.state.IdOfArtist;
+        axios.get(`/getRelatedArtists/${artistId}.json`);
+    }
+
     render() {
         return (
             <div>
@@ -67,7 +143,7 @@ export default class App extends React.Component {
                 <br />
                 <hr className="horiLine" />
                 <br />
-                <h2>Create a Playlist out of a Seed!</h2>
+                <h2>Create a Playlist out of the related Artists!</h2>
                 <br />
                 <input
                     type="text"
@@ -78,11 +154,75 @@ export default class App extends React.Component {
                 />
                 <br />
                 <button className="button" onClick={this.handleSubmit}>
-                    Click me to make Ajax Request
+                    Search Artist
                 </button>
                 <br />
                 <hr className="horiLine" />
-                <h3>Output should show below!</h3>
+                {this.state.showResultOfSearch && (
+                    <div>
+                        <h3>Result of Search Artist!</h3>
+                        <h5>Arist Name: {this.state.SearchArtistName}</h5>
+                        <p>Artist Id: {this.state.IdOfArtist}</p>
+                        <img
+                            src={this.state.SearchArtistPicture}
+                            width="200"
+                            height="200"
+                        />
+                        <button className="button" onClick={this.clearSearch}>
+                            If its not you can clear!
+                        </button>
+                        <button
+                            className="button"
+                            onClick={this.getRelatedArtists}
+                        >
+                            Yes, hes perfect!
+                        </button>
+                    </div>
+                )}
+                {this.state.nothingFound && (
+                    <div>Nothing Found! Be precise with search Name!</div>
+                )}
+
+                <hr className="horiLine" />
+                <h3>CREATE PLAYLIST SECTION</h3>
+                <input
+                    type="text"
+                    placeholder="Playlist Name"
+                    name="playlistName"
+                    className="textInput"
+                    onChange={this.handleChangeForCreatingPlaylist}
+                />
+                <br />
+                <button
+                    className="button"
+                    onClick={this.handleSubmitForCreatingPlaylist}
+                >
+                    Create Playlist
+                </button>
+                {this.state.playListCreated && (
+                    <div>
+                        <hr className="horiLine" />
+                        <h1>Playlist Created</h1>
+                        <p>Name of Playlist: {this.state.playListName}</p>
+                        <p>Id of Playlist: {this.state.playListId}</p>
+                        <a
+                            href={this.state.linkToPlayList}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Link to the PlayList
+                        </a>
+                        <a
+                            href={this.state.playListUri}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Open in Spotify!
+                        </a>
+
+                        <hr className="horiLine" />
+                    </div>
+                )}
             </div>
         );
     }

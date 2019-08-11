@@ -44,6 +44,10 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+////// Encoding base64url
+
+const image2base64 = require("image-to-base64");
+
 // SERVING AND REQUIRING FOLDERS, FILES, MIDDLEWARES
 
 app.use(express.static("./public"));
@@ -64,6 +68,17 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
+});
+
+/////////////////// SETUP Spotify-Web-Api-Node //////////////////////////////
+
+const SpotifyWebApi = require("spotify-web-api-node");
+
+// credentials are optional
+const spotifyApi = new SpotifyWebApi({
+    clientId: "fcecfc72172e4cd267473117a17cbd4d",
+    clientSecret: "a6338157c9bb5ac9c71924cb2940e1a7",
+    redirectUri: "http://www.example.com/callback"
 });
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////////////////////////
@@ -95,6 +110,8 @@ passport.use(
             process.nextTick(function() {
                 userAccessToken = accessToken;
                 userEmail = profile.emails[0].value;
+
+                spotifyApi.setAccessToken(accessToken);
 
                 db.addUser(
                     profile.id,
@@ -144,6 +161,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//////////// Image base SETUP
+
+var base64Img = require("base64-img");
+
+let userImage = base64Img.base64("public/images/myimage.jpeg", function(
+    err,
+    data
+) {
+    console.log("My error in iamge: ", err);
+    return data;
+});
+
 //////////////////////// Authentication Process //////////////////////////
 
 app.get(
@@ -154,7 +183,8 @@ app.get(
             "user-read-private",
             "user-follow-read",
             "playlist-modify-private",
-            "playlist-modify-public"
+            "playlist-modify-public",
+            "ugc-image-upload"
         ],
         showDialog: true
     }),
@@ -186,6 +216,7 @@ app.get("/access", async (req, res) => {
         const userProfile = await db.getUser(userEmail);
         console.log("My User Profile: ", userProfile.rows[0]);
         console.log("Type of userProfile: ", typeof userProfile.rows[0]);
+        req.session.spotify_id = userProfile.rows[0].spotify_id;
 
         res.json({
             token: userAccessToken,
@@ -203,6 +234,18 @@ app.get("/logout", function(req, res) {
 
 //////////////////// POST ROUTES FOR WEBSITE ////////////////////////////
 
+// let userImage;
+// image2base64("public/images/myimage.png") // you can also to use url
+//     .then(response => {
+//         console.log("Done"); //cGF0aC90by9maWxlLmpwZw==
+//         return (userImage = response);
+//     })
+//     .catch(error => {
+//         console.log(error); //Exepection error....
+//     });
+//
+// console.log("My encoded UserImage: ", userImage);
+
 ////////////////// REQUESTS FOR APP ////////////////////////////////////
 
 app.get("/artistName/:artistName.json", async (req, res) => {
@@ -211,8 +254,99 @@ app.get("/artistName/:artistName.json", async (req, res) => {
 
     console.log("Getting Input from Seaching Artist Field!");
     console.log("Artist Name: ", artistName);
-    console.log(sptfy.getArtist(artistName));
+
+    spotifyApi
+        .searchArtists(artistName)
+        .then(
+            function(data) {
+                console.log("Search artists:", data.body.artists.items[0]);
+                console.log(
+                    "Found Artist Name: ",
+                    data.body.artists.items[0].name
+                );
+                console.log(
+                    "Image of Artist: ",
+                    data.body.artists.items[0].images[0].url
+                );
+                console.log("Id of Artist: ", data.body.artists.items[0].id);
+
+                res.json({
+                    SearchArtistPicture:
+                        data.body.artists.items[0].images[0].url,
+                    IdOfArtist: data.body.artists.items[0].id,
+                    SearchArtistName: data.body.artists.items[0].name
+                });
+            },
+            function(err) {
+                console.error(err);
+            }
+        )
+        .catch(err => {
+            console.log("Error in getting Artist: ", err);
+            res.json({
+                ooops: true
+            });
+        });
 });
+
+app.get("/getRelatedArtists/:artistId.json", function(req, res) {
+    let artistId = req.params.artistId;
+    console.log("Log my Artist Id in get Related: ", artistId);
+
+    spotifyApi.getArtistRelatedArtists(artistId).then(
+        function(data) {
+            console.log("Something Happened");
+            // console.log(data.body);
+            console.log(data.body.artists);
+        },
+        function(err) {
+            console.log("Error in getting related Artist: ", err);
+        }
+    );
+});
+
+app.get("/createPlaylist/:playListName.json", function(req, res) {
+    let playListName = req.params.playListName;
+
+    spotifyApi
+        .createPlaylist(
+            req.session.spotify_id,
+            `${playListName}: created by PLG`,
+            {
+                public: true
+            }
+        )
+        .then(
+            function(data) {
+                console.log("Created playlist!");
+
+                let { external_urls, name, id, uri } = data.body;
+
+                res.json({
+                    linkToPlayList: external_urls.spotify,
+                    playListName: name,
+                    playListId: id,
+                    playListUri: uri
+                });
+            },
+            function(err) {
+                console.log("Something went wrong!", err);
+            }
+        );
+});
+
+// DOESNT WORK
+
+// spotifyApi.uploadCustomPlaylistCoverImage(id, userImage).then(
+//     function(data) {
+//         console.log("Data for Upload Image: ", data);
+//         console.log("Playlsit cover image uploaded!");
+//
+//     },
+//     function(err) {
+//         console.log("Something went wrong!", err);
+//     }
+// );
 
 // FROM SOCIAL
 
