@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Welcome from "./welcomeLogin";
 import App from "./app";
 import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";

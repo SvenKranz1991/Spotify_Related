@@ -69,7 +69,7 @@ h1 {
     height: 4vh;
     width: 30vh;
     margin-left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-100%);
     outline: none;
     border: 3px solid #cccccc;
     resize: none;
@@ -82,4 +82,10 @@ h1 {
 
 .bolder {
     font-weight: bolder;
+}
+
+/* REGULAR CSS */
+
+.ArtistPicture {
+    border-radius: 50%;
 }

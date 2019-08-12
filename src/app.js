@@ -1,12 +1,23 @@
 import React from "react";
 import axios from "./axios";
+import SpotifyPlayer from "react-spotify-player";
+import RelatedArtists from "./relatedArtists";
+
+const size = {
+    width: "100%",
+    height: 300
+};
+const view = "list"; // or 'coverart'
+const theme = "white"; // or 'white'
 
 console.log("Log axios for sanity: ", axios);
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showRelated: false
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitForCreatingPlaylist = this.handleSubmitForCreatingPlaylist.bind(
@@ -17,6 +28,7 @@ export default class App extends React.Component {
         );
         this.clearSearch = this.clearSearch.bind(this);
         this.getRelatedArtists = this.getRelatedArtists.bind(this);
+        this.getTopTracks = this.getTopTracks.bind(this);
     }
     componentDidMount() {
         axios.get("/access").then(result => {
@@ -48,7 +60,8 @@ export default class App extends React.Component {
 
                 if (data.data.ooops) {
                     return this.setState({
-                        nothingFound: true
+                        nothingFound: true,
+                        showResultOfSearch: false
                     });
                 }
 
@@ -125,21 +138,34 @@ export default class App extends React.Component {
         });
     }
     getRelatedArtists(e) {
+        let artistId = this.state.IdOfArtist;
+        console.log("Clicked");
+        axios.get(`/getRelatedArtists/${artistId}.json`).then(result => {
+            console.log("Artists Data: ", result.data);
+        });
+        // this.setState({
+        //     showRelated: true
+        // });
+    }
+    getTopTracks(e) {
         console.log("Clicked");
         let artistId = this.state.IdOfArtist;
-        axios.get(`/getRelatedArtists/${artistId}.json`);
+        axios.get(`/topTracksOfEachArtist/${artistId}.json`);
     }
 
     render() {
         return (
             <div>
                 <br />
+                <h2>USER INFO</h2>
+                <p>
+                    Spotify Id: {this.state.spotify_id} --- E-Mail:{" "}
+                    {this.state.email} --- Profile Url: {this.state.profileUrl}
+                </p>
+                <img src={this.state.photo} height="100px" width="100px" />
                 <br />
                 <h1>Spotify Playlist Generator</h1>
-                <p>Spotify Id: {this.state.spotify_id}</p>
-                <p>E-Mail: {this.state.email}</p>
-                <p>Profile Url: {this.state.profileUrl}</p>
-                <img src={this.state.photo} height="50px" width="50px" />
+
                 <br />
                 <hr className="horiLine" />
                 <br />
@@ -160,13 +186,14 @@ export default class App extends React.Component {
                 <hr className="horiLine" />
                 {this.state.showResultOfSearch && (
                     <div>
-                        <h3>Result of Search Artist!</h3>
-                        <h5>Arist Name: {this.state.SearchArtistName}</h5>
-                        <p>Artist Id: {this.state.IdOfArtist}</p>
+                        <h1>Result of Search Artist!</h1>
+                        <h2>Artist Name: {this.state.SearchArtistName}</h2>
+                        <h3>Artist Id: {this.state.IdOfArtist}</h3>
                         <img
                             src={this.state.SearchArtistPicture}
-                            width="200"
-                            height="200"
+                            width="300px"
+                            height="300px"
+                            className="ArtistPicture"
                         />
                         <button className="button" onClick={this.clearSearch}>
                             If its not you can clear!
@@ -175,7 +202,15 @@ export default class App extends React.Component {
                             className="button"
                             onClick={this.getRelatedArtists}
                         >
-                            Yes, hes perfect!
+                            Yes, thats perfect! Get me the related Artists!
+                        </button>
+                        <RelatedArtists artistId={this.state.IdOfArtist} />
+
+                        <hr className="horiLine" />
+                        <h1>Testing getting Top Tracks</h1>
+                        <hr className="horiLine" />
+                        <button className="button" onClick={this.getTopTracks}>
+                            Yes, get me the Top Tracks!
                         </button>
                     </div>
                 )}
@@ -184,7 +219,7 @@ export default class App extends React.Component {
                 )}
 
                 <hr className="horiLine" />
-                <h3>CREATE PLAYLIST SECTION</h3>
+                <h1>CREATE PLAYLIST SECTION</h1>
                 <input
                     type="text"
                     placeholder="Playlist Name"
@@ -202,9 +237,15 @@ export default class App extends React.Component {
                 {this.state.playListCreated && (
                     <div>
                         <hr className="horiLine" />
-                        <h1>Playlist Created</h1>
+                        <h2>-------------Playlist Created-----------------</h2>
                         <p>Name of Playlist: {this.state.playListName}</p>
                         <p>Id of Playlist: {this.state.playListId}</p>
+                        <SpotifyPlayer
+                            uri={this.state.playListUri}
+                            size={size}
+                            view={view}
+                            theme={theme}
+                        />
                         <a
                             href={this.state.linkToPlayList}
                             target="_blank"
@@ -227,3 +268,7 @@ export default class App extends React.Component {
         );
     }
 }
+
+// {this.state.showRelated && (
+//     <RelatedArtists artistId={this.state.IdOfArtist} />
+// )}

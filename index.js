@@ -291,16 +291,80 @@ app.get("/artistName/:artistName.json", async (req, res) => {
 
 app.get("/getRelatedArtists/:artistId.json", function(req, res) {
     let artistId = req.params.artistId;
-    console.log("Log my Artist Id in get Related: ", artistId);
+    // console.log("Log my Artist Id in get Related: ", artistId);
 
     spotifyApi.getArtistRelatedArtists(artistId).then(
         function(data) {
-            console.log("Something Happened");
+            // console.log("Something Happened");
             // console.log(data.body);
             console.log(data.body.artists);
+
+            const mappedArtists = data.body.artists.map(eachArtist => {
+                const {
+                    name,
+                    id,
+                    images,
+                    uri,
+                    external_urls,
+                    followers,
+                    popularity
+                } = eachArtist;
+
+                const linkToSpotify = external_urls.spotify;
+                const artistImage = images.slice(0, 1);
+                const artistImageLink = artistImage[0].url;
+                const followers_value = followers.total;
+
+                return {
+                    name,
+                    id,
+                    artistImageLink,
+                    uri,
+                    linkToSpotify,
+                    followers_value,
+                    popularity
+                };
+            });
+
+            const mappedArtistsId = data.body.artists.map(eachArtist => {
+                const { id } = eachArtist;
+
+                return { id };
+            });
+            console.log("MappedArtists: ", mappedArtists);
+            console.log("MappedArtistsId: ", mappedArtistsId);
         },
         function(err) {
             console.log("Error in getting related Artist: ", err);
+        }
+    );
+});
+
+app.get("/topTracksOfEachArtist/:artistId.json", function(req, res) {
+    let artistId = req.params.artistId;
+    console.log("Something Happened");
+
+    spotifyApi.getArtistTopTracks(artistId, "from_token").then(
+        function(data) {
+            console.log(data.body.tracks);
+            const mappedTracks = data.body.tracks.map(eachTrack => {
+                const { name, popularity, id } = eachTrack;
+
+                return {
+                    name,
+                    id,
+                    popularity
+                };
+            });
+            const mappedTracksId = data.body.tracks.map(eachTrack => {
+                const { id } = eachTrack;
+                return { id };
+            });
+            console.log("MappedTracks: ", mappedTracks);
+            console.log("MappedTracksId: ", mappedTracksId);
+        },
+        function(err) {
+            console.log("Something went wrong!", err);
         }
     );
 });
