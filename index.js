@@ -331,8 +331,8 @@ app.get("/getRelatedArtists/:artistId.json", function(req, res) {
 
                 return { id };
             });
-            console.log("MappedArtists: ", mappedArtists);
-            console.log("MappedArtistsId: ", mappedArtistsId);
+            // console.log("MappedArtists: ", mappedArtists);
+            // console.log("MappedArtistsId: ", mappedArtistsId);
         },
         function(err) {
             console.log("Error in getting related Artist: ", err);
