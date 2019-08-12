@@ -252,23 +252,23 @@ app.get("/artistName/:artistName.json", async (req, res) => {
     // console.log("My Request Body: ", req.body);
     let artistName = req.params.artistName;
 
-    console.log("Getting Input from Seaching Artist Field!");
-    console.log("Artist Name: ", artistName);
+    // console.log("Getting Input from Seaching Artist Field!");
+    // console.log("Artist Name: ", artistName);
 
     spotifyApi
         .searchArtists(artistName)
         .then(
             function(data) {
-                console.log("Search artists:", data.body.artists.items[0]);
-                console.log(
-                    "Found Artist Name: ",
-                    data.body.artists.items[0].name
-                );
-                console.log(
-                    "Image of Artist: ",
-                    data.body.artists.items[0].images[0].url
-                );
-                console.log("Id of Artist: ", data.body.artists.items[0].id);
+                // console.log("Search artists:", data.body.artists.items[0]);
+                // console.log(
+                //     "Found Artist Name: ",
+                //     data.body.artists.items[0].name
+                // );
+                // console.log(
+                //     "Image of Artist: ",
+                //     data.body.artists.items[0].images[0].url
+                // );
+                // console.log("Id of Artist: ", data.body.artists.items[0].id);
 
                 res.json({
                     SearchArtistPicture:
@@ -347,21 +347,39 @@ app.get("/topTracksOfEachArtist/:artistId.json", function(req, res) {
     spotifyApi.getArtistTopTracks(artistId, "from_token").then(
         function(data) {
             console.log(data.body.tracks);
-            const mappedTracks = data.body.tracks.map(eachTrack => {
-                const { name, popularity, id } = eachTrack;
+            const slicedTracksArray = data.body.tracks.slice(0, 3);
+            console.log("slicedTracksArray: ", slicedTracksArray);
+            const mappedTracks = slicedTracksArray.map(eachTrack => {
+                const { name, popularity, id, uri } = eachTrack;
 
                 return {
                     name,
                     id,
-                    popularity
+                    popularity,
+                    uri
                 };
             });
-            const mappedTracksId = data.body.tracks.map(eachTrack => {
-                const { id } = eachTrack;
-                return { id };
+            const mappedTracksId = slicedTracksArray.map(eachTrack => {
+                const { uri } = eachTrack;
+                return { uri };
+            });
+
+            // YAY RIGHT FORMAT -- allArray
+            const trackIdsFormat = mappedTracksId.map(eachTrack => {
+                console.log("For Format: ", eachTrack);
+                return eachTrack["uri"];
+            });
+
+            const trackIdsFormatTwo = mappedTracksId.map(eachTrack => {
+                console.log("For Format: ", eachTrack);
+                return eachTrack["uri"];
             });
             console.log("MappedTracks: ", mappedTracks);
             console.log("MappedTracksId: ", mappedTracksId);
+            console.log("TrackIdsFormat: ", trackIdsFormat);
+            console.log("TrackIdsFormatTwo: ", trackIdsFormatTwo);
+            const allArray = trackIdsFormat.concat(trackIdsFormatTwo);
+            console.log("Now it should be merged: ", allArray);
         },
         function(err) {
             console.log("Something went wrong!", err);
@@ -385,6 +403,27 @@ app.get("/createPlaylist/:playListName.json", function(req, res) {
                 console.log("Created playlist!");
 
                 let { external_urls, name, id, uri } = data.body;
+                let trackList = [
+                    "spotify:track:5zOnoB8FdZudDcPX4O8WqF",
+                    "spotify:track:5rYTMjVkGioNF4MpSQISlg",
+                    "spotify:track:3vlVbJmvSm3x5Hqmnzh8HI",
+                    "spotify:track:0P5bg4JX1fUplClPC0nkUS",
+                    "spotify:track:4Pkst1hmHJ8dUdOaBqdee7",
+                    "spotify:track:4Pkst1hmHJ8dUdOaBqdee7",
+                    "spotify:track:37el170lJYr5CiWJFk207u",
+                    "spotify:track:0SGccA9exVTuzQY7jwbASF",
+                    "spotify:track:7hfGhtkWBWiam6LlsIgATD",
+                    "spotify:track:2r3W5VKpa07a52vvytL65Z",
+                    "spotify:track:6mtnu7p8tkUzlDO3KOoaTY"
+                ];
+                spotifyApi.addTracksToPlaylist(id, trackList).then(
+                    function(data) {
+                        console.log("Added tracks to playlist!");
+                    },
+                    function(err) {
+                        console.log("Something went wrong!", err);
+                    }
+                );
 
                 res.json({
                     linkToPlayList: external_urls.spotify,
@@ -421,6 +460,190 @@ app.get("/createPlaylist/:playListName.json", function(req, res) {
 //         res.sendFile(__dirname + "/index.html");
 //     }
 // });
+
+////////////////////////////// ONE HUGE ROUTE ///////////////////////////
+
+app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
+    let artistName = req.params.artistName;
+    // console.log("Clicked in createPlaylistOutOfName: ", artistName);
+
+    let trackListForCreatingPlaylist;
+
+    spotifyApi.searchArtists(artistName).then(
+        function(data) {
+            // console.log("Id of Artist: ", data.body.artists.items[0].id);
+            let searchArtistId = data.body.artists.items[0].id;
+
+            spotifyApi
+                .getArtistRelatedArtists(searchArtistId)
+                .then(
+                    function(data) {
+                        // console.log(data.body.artists);
+
+                        // console.log(
+                        //     "Length of Related Artists: ",
+                        //     data.body.artists.length
+                        // );
+
+                        let newList = data.body.artists.slice(0, 10);
+
+                        // console.log("New Length: ", newList.length);
+
+                        const mappedArtistsId = newList.map(eachArtist => {
+                            const { id } = eachArtist;
+
+                            return { id };
+                        });
+                        // console.log("MappedArtistsId: ", mappedArtistsId);
+
+                        const mappedArtistsIdFormat = mappedArtistsId.map(
+                            eachTrack => {
+                                return eachTrack["id"];
+                            }
+                        );
+
+                        const list = [];
+
+                        Promise.all([
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[0]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[1]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[2]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[3]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[4]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[5]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[6]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[7]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[8]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[9])
+                        ]).then(results => {
+                            // console.log("My Results: ", results);
+
+                            let myTrackIdArray = results[0].concat(
+                                results[1],
+                                results[2],
+                                results[3],
+                                results[4],
+                                results[5],
+                                results[6],
+                                results[7],
+                                results[8],
+                                results[9]
+                            );
+
+                            console.log("MyTrackIdArray: ", myTrackIdArray);
+
+                            // Creating PlayList
+
+                            spotifyApi
+                                .createPlaylist(
+                                    req.session.spotify_id,
+                                    `Playlist for Related Artists of: ${artistName}`,
+                                    {
+                                        public: true
+                                    }
+                                )
+                                .then(
+                                    function(data) {
+                                        console.log("Created playlist!");
+
+                                        let {
+                                            external_urls,
+                                            name,
+                                            id,
+                                            uri
+                                        } = data.body;
+                                        spotifyApi
+                                            .addTracksToPlaylist(
+                                                id,
+                                                myTrackIdArray
+                                            )
+                                            .then(
+                                                function(data) {
+                                                    console.log(
+                                                        "Added tracks to playlist!"
+                                                    );
+                                                },
+                                                function(err) {
+                                                    console.log(
+                                                        "Something went wrong!",
+                                                        err
+                                                    );
+                                                }
+                                            );
+
+                                        res.json({
+                                            linkToPlayList:
+                                                external_urls.spotify,
+                                            playListName: name,
+                                            playListId: id,
+                                            playListUri: uri
+                                        });
+                                    },
+                                    function(err) {
+                                        console.log(
+                                            "Something went wrong!",
+                                            err
+                                        );
+                                    }
+                                );
+                        });
+                    },
+                    function(err) {
+                        console.error(err);
+                    }
+                )
+                .catch(err => {
+                    console.log("Error in getting Artist: ", err);
+                });
+        }, // GOT ALL RELATED ARTIST ID
+        function(err) {
+            console.log("Error in getting related Artist: ", err);
+        }
+    ); // CLOSE SPOTIFY GET RELATED ARTIST
+
+    // console.log("MappedAristsId.length: ", mappedArtistId.length);
+});
+
+/////////////////////// WRITE FUNCTION FOR GETTING Tracks
+
+function getIdOfTracksForPlaylist(artistName) {
+    console.log("Running");
+    return new Promise((resolve, reject) => {
+        spotifyApi.getArtistTopTracks(artistName, "from_token").then(
+            function(data) {
+                const slicedTracksArray = data.body.tracks.slice(0, 3);
+                // console.log(
+                //     "slicedTracksArray: ",
+                //     slicedTracksArray
+                // );
+
+                const mappedTracksId = slicedTracksArray.map(eachTrack => {
+                    const { uri } = eachTrack;
+                    return { uri };
+                });
+
+                // YAY RIGHT FORMAT -- allArray
+                const trackIdsFormat = mappedTracksId.map(eachTrack => {
+                    return eachTrack["uri"];
+                });
+
+                console.log(trackIdsFormat);
+                resolve(trackIdsFormat);
+
+                // list.push(trackIdsFormat);
+                // console.log("My List: ", list);
+
+                // const allArray = trackIdsFormat.concat(
+                //     trackIdsFormatTwo
+                // );
+            },
+            function(err) {
+                console.log("Something went wrong!", err);
+                reject(err);
+            }
+        );
+    });
+}
 
 // !!!!!ALWAYS BE AT BOTTOM!!!!!
 app.get("*", function(req, res) {

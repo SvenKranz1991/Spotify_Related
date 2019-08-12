@@ -29,6 +29,12 @@ export default class App extends React.Component {
         this.clearSearch = this.clearSearch.bind(this);
         this.getRelatedArtists = this.getRelatedArtists.bind(this);
         this.getTopTracks = this.getTopTracks.bind(this);
+        this.handleSubmitBigBadButton = this.handleSubmitBigBadButton.bind(
+            this
+        );
+        this.handleChangeBigBadButton = this.handleChangeBigBadButton.bind(
+            this
+        );
     }
     componentDidMount() {
         axios.get("/access").then(result => {
@@ -152,10 +158,90 @@ export default class App extends React.Component {
         let artistId = this.state.IdOfArtist;
         axios.get(`/topTracksOfEachArtist/${artistId}.json`);
     }
+    handleSubmitBigBadButton() {
+        let artistName = this.state.bigbadbutton;
+        console.log("CLicked in BigBad", artistName);
+        axios
+            .get(`/createPlaylistOutOfName/${artistName}.json`)
+            .then(data => {
+                console.log("Data from Searching Artist: ", data);
+
+                let {
+                    linkToPlayList,
+                    playListId,
+                    playListName,
+                    playListUri
+                } = data.data;
+                console.log(
+                    "Everything needed: ",
+                    linkToPlayList,
+                    playListId,
+                    playListName,
+                    playListUri
+                );
+                if (data) {
+                    this.setState({
+                        linkToPlayList: linkToPlayList,
+                        playListUri: playListUri,
+                        playListName: playListName,
+                        playListId: playListId,
+                        playListCreated: true
+                    });
+                }
+
+                // if (data.data.ooops) {
+                //     return this.setState({
+                //         nothingFound: true,
+                //         showResultOfSearch: false
+                //     });
+                // }
+                //
+                // let {
+                //     IdOfArtist,
+                //     SearchArtistName,
+                //     SearchArtistPicture
+                // } = data.data;
+                //
+                // this.setState({
+                //     IdOfArtist: IdOfArtist,
+                //     SearchArtistName: SearchArtistName,
+                //     SearchArtistPicture: SearchArtistPicture,
+                //     showResultOfSearch: true,
+                //     nothingFound: false
+                // });
+            })
+            .catch(err => {
+                console.log("Error in finding Artist: ", err);
+            });
+    }
+    handleChangeBigBadButton(e) {
+        console.log("e: ", e.target.name, e.target.value);
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
 
     render() {
         return (
             <div>
+                <hr className="horiLine" />
+                <br />
+                <h2>BigBadButton!</h2>
+                <br />
+                <input
+                    type="text"
+                    placeholder="Artist Name"
+                    name="bigbadbutton"
+                    className="textInput"
+                    onChange={this.handleChangeBigBadButton}
+                />
+                <br />
+                <button
+                    className="button"
+                    onClick={this.handleSubmitBigBadButton}
+                >
+                    Search Artist
+                </button>
                 <br />
                 <h2>USER INFO</h2>
                 <p>
