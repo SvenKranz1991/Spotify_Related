@@ -173,6 +173,7 @@ app.get(
         scope: [
             "user-read-email",
             "user-read-private",
+            "user-top-read",
             "user-follow-read",
             "playlist-modify-private",
             "playlist-modify-public",
@@ -217,6 +218,52 @@ app.get("/access", async (req, res) => {
     } catch (err) {
         console.log("My Error in access: ", err);
     }
+});
+
+app.get("/app/userTopArtists", async (req, res) => {
+    spotifyApi
+        .getMyTopArtists()
+        .then(result => {
+            console.log("My Top Artists: ", result.body.items);
+
+            const mappedArtists = result.body.items.map(eachArtist => {
+                const {
+                    name,
+                    id,
+                    images,
+                    uri,
+                    external_urls,
+                    followers,
+                    popularity
+                } = eachArtist;
+
+                const linkToSpotify = external_urls.spotify;
+                const artistImage = images.slice(0, 1);
+                const artistImageLink = artistImage[0].url;
+                const followers_value = followers.total;
+
+                return {
+                    name,
+                    id,
+                    artistImageLink,
+                    uri,
+                    linkToSpotify,
+                    followers_value,
+                    popularity
+                };
+            });
+
+            let topArtistsList = mappedArtists
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 5);
+
+            console.log("My Top Artists List: ", topArtistsList);
+
+            res.json(topArtistsList);
+        })
+        .catch(err => {
+            console.log("My error in Top Artists: ", err);
+        });
 });
 
 app.get("/logout", function(req, res) {

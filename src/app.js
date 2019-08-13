@@ -1,24 +1,20 @@
 import React from "react";
 import axios from "./axios";
-import SpotifyPlayer from "react-spotify-player";
 import RelatedArtists from "./relatedArtists";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 import ShowingCreatedPlaylists from "./showingCreatedPlaylists";
-
-const size = {
-    width: "100%",
-    height: 300
-};
-const view = "coverart"; // or 'coverart'
-const theme = "white"; // or 'white'
-
-console.log("Log axios for sanity: ", axios);
+import SingleGeneratePlaylist from "./singleGeneratePlaylist";
+import LoggedUser from "./loggedUser";
+import SpotifyPlayerComponent from "./spotifyPlayerComponent";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showRelated: false
+            showRelated: false,
+            playListCreated: false,
+            showResultOfSearch: false,
+            linkToPlayList: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -31,32 +27,9 @@ export default class App extends React.Component {
         this.clearSearch = this.clearSearch.bind(this);
         this.getRelatedArtists = this.getRelatedArtists.bind(this);
         this.getTopTracks = this.getTopTracks.bind(this);
-        this.handleSubmitBigBadButton = this.handleSubmitBigBadButton.bind(
-            this
-        );
-        this.handleChangeBigBadButton = this.handleChangeBigBadButton.bind(
-            this
-        );
     }
     componentDidMount() {
-        axios.get("/access").then(result => {
-            console.log("LogmyAccesstoken: ", result.data.token);
-            console.log("My Result: ", result);
-            if (result.data.token == "") {
-                location.replace("/");
-            }
-            this.setState({
-                token: result.data.token,
-                spotify_id: result.data.user.spotify_id,
-                displayname: result.data.user.displayname,
-                email: result.data.user.email,
-                profileUrl: result.data.user.profileurl,
-                photo: result.data.user.photo,
-                playListCreated: false,
-                showResultOfSearch: false,
-                linkToPlayList: ""
-            });
-        });
+        console.log("Main Page Mounted");
     }
     handleSubmit() {
         let artistName = this.state.artistName;
@@ -162,47 +135,6 @@ export default class App extends React.Component {
         let artistId = this.state.IdOfArtist;
         axios.get(`/topTracksOfEachArtist/${artistId}.json`);
     }
-    handleSubmitBigBadButton() {
-        let artistName = this.state.bigbadbutton;
-        console.log("CLicked in BigBad", artistName);
-        axios
-            .get(`/createPlaylistOutOfName/${artistName}.json`)
-            .then(data => {
-                console.log("Data from Searching Artist: ", data);
-
-                let {
-                    linkToPlayList,
-                    playListId,
-                    playListName,
-                    playListUri
-                } = data.data;
-                console.log(
-                    "Everything needed: ",
-                    linkToPlayList,
-                    playListId,
-                    playListName,
-                    playListUri
-                );
-                if (data) {
-                    this.setState({
-                        linkToPlayList: linkToPlayList,
-                        playListUri: playListUri,
-                        playListName: playListName,
-                        playListId: playListId,
-                        playListCreated: true
-                    });
-                }
-            })
-            .catch(err => {
-                console.log("Error in finding Artist: ", err);
-            });
-    }
-    handleChangeBigBadButton(e) {
-        console.log("e: ", e.target.name, e.target.value);
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
 
     render() {
         return (
@@ -211,6 +143,9 @@ export default class App extends React.Component {
                     <header>
                         <Link to="/app">Home</Link>
                         <Link to="/app/playlists">Playlists</Link>
+                        <Link to="/app/justCreatePlaylist">
+                            Create Playlist
+                        </Link>
                     </header>
 
                     <div className="mainbody">
@@ -221,51 +156,10 @@ export default class App extends React.Component {
                                 render={() => {
                                     return (
                                         <div>
-                                            <hr className="horiLine" />
-                                            <br />
-                                            <h2>
-                                                Creating Playlist out of Artist!
-                                                Single Click
-                                            </h2>
-                                            <br />
-                                            <input
-                                                type="text"
-                                                placeholder="Artist Name"
-                                                name="bigbadbutton"
-                                                className="textInput"
-                                                onChange={
-                                                    this
-                                                        .handleChangeBigBadButton
-                                                }
-                                            />
-                                            <br />
-                                            <button
-                                                className="button"
-                                                onClick={
-                                                    this
-                                                        .handleSubmitBigBadButton
-                                                }
-                                            >
-                                                Search Artist
-                                            </button>
-                                            <br />
-                                            <h2>USER INFO</h2>
-                                            <p>
-                                                Spotify Id:{" "}
-                                                {this.state.spotify_id} ---
-                                                E-Mail: {this.state.email} ---
-                                                Profile Url:{" "}
-                                                {this.state.profileUrl}
-                                            </p>
-                                            <img
-                                                src={this.state.photo}
-                                                height="100px"
-                                                width="100px"
-                                            />
-                                            <br />
                                             <h1>Spotify Playlist Generator</h1>
 
                                             <br />
+                                            <LoggedUser />
                                             <hr className="horiLine" />
                                             <br />
                                             <h2>
@@ -310,7 +204,6 @@ export default class App extends React.Component {
                                                             this.state
                                                                 .SearchArtistUrl
                                                         }
-                                                        target="_blank"
                                                         rel="noopener noreferrer"
                                                     >
                                                         <img
@@ -397,53 +290,24 @@ export default class App extends React.Component {
                                             </button>
                                             {this.state.playListCreated && (
                                                 <div>
-                                                    <hr className="horiLine" />
-                                                    <h2>
-                                                        -------------Playlist
-                                                        Created-----------------
-                                                    </h2>
-                                                    <p>
-                                                        Name of Playlist:{" "}
-                                                        {
+                                                    <SpotifyPlayerComponent
+                                                        playListName={
                                                             this.state
                                                                 .playListName
                                                         }
-                                                    </p>
-                                                    <p>
-                                                        Id of Playlist:{" "}
-                                                        {this.state.playListId}
-                                                    </p>
-                                                    <SpotifyPlayer
+                                                        playListId={
+                                                            this.state
+                                                                .playListId
+                                                        }
                                                         uri={
                                                             this.state
                                                                 .playListUri
                                                         }
-                                                        size={size}
-                                                        view={view}
-                                                        theme={theme}
-                                                    />
-                                                    <a
                                                         href={
                                                             this.state
                                                                 .linkToPlayList
                                                         }
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        Link to the PlayList
-                                                    </a>
-                                                    <a
-                                                        href={
-                                                            this.state
-                                                                .playListUri
-                                                        }
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        Open in Spotify!
-                                                    </a>
-
-                                                    <hr className="horiLine" />
+                                                    />
                                                 </div>
                                             )}
                                         </div>
@@ -455,6 +319,10 @@ export default class App extends React.Component {
                             exact
                             path="/app/playlists"
                             component={ShowingCreatedPlaylists}
+                        />
+                        <Route
+                            path="/app/justCreatePlaylist"
+                            component={SingleGeneratePlaylist}
                         />
                     </div>
                 </BrowserRouter>

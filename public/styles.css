@@ -94,3 +94,11 @@ h1 {
     width: 400px;
     height: 400px;
 }
+
+.userProfile {
+    text-align: center;
+}
+
+.userProfile img {
+    border-radius: 50%;
+}
