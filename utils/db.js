@@ -7,6 +7,8 @@ if (process.env.DATABASE_URL) {
     dbUrl = spicedPg("postgres:postgres:postgres@localhost:5432/spotify");
 }
 
+// REGARDING USERS!
+
 exports.addUser = function addUser(
     spotify_id,
     displayName,
@@ -43,4 +45,28 @@ exports.updateUser = function updateUser(
         `UPDATE users SET spotify_id = $1, displayName = $2, profileUrl = $3, photo = $5 WHERE email = $4`,
         [spotify_id, displayName, profileUrl, email, photo]
     );
+};
+
+// REGARDING PLAYLIST CREATED
+
+exports.addPlaylist = function addPlaylist(
+    spotify_id,
+    playlistName,
+    mainArtist,
+    artistPic,
+    playListUrl
+) {
+    return dbUrl.query(
+        `INSERT INTO playlistscreated (spotify_id,
+        playlistName,
+        mainArtist,
+        artistPic,
+        playListUrl)
+        VALUES ($1, $2, $3, $4, $5)`,
+        [spotify_id, playlistName, mainArtist, artistPic, playListUrl]
+    );
+};
+
+exports.getPlaylists = function getPlaylists() {
+    return dbUrl.query(`SELECT * FROM playlistscreated`);
 };

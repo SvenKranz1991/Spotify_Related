@@ -9,3 +9,14 @@ CREATE TABLE users(
     photo VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE playlistscreated(
+    id SERIAL PRIMARY KEY,
+    spotify_id VARCHAR(255) NOT NULL,
+    playlistName VARCHAR(255) NOT NULL,
+    mainArtist VARCHAR(255) NOT NULL,
+    artistPic VARCHAR(255) NOT NULL,
+    playListUrl VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

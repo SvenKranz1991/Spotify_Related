@@ -11,9 +11,6 @@ app.use(require("body-parser").json());
 const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 
-// FROM SPOTIFY DOCUMENTATION
-// https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js
-
 var request = require("request"); // "Request" library
 var cors = require("cors");
 var querystring = require("querystring");
@@ -54,7 +51,6 @@ app.use(express.static("./public"));
 
 const sptfy = require("./utils/sptfy-middleware");
 const db = require("./utils/db");
-// const bc = require("./utils/bc");
 
 // SETUP Passport
 
@@ -139,10 +135,6 @@ passport.use(
                                 console.log("Error in updating User: ", err);
                             });
                     });
-                // To keep the example simple, the user's spotify profile is returned to
-                // represent the logged-in user. In a typical application, you would want
-                // to associate the spotify account with a user record in your database,
-                // and return that user instead.
 
                 return done(null, profile);
             });
@@ -249,11 +241,7 @@ app.get("/logout", function(req, res) {
 ////////////////// REQUESTS FOR APP ////////////////////////////////////
 
 app.get("/artistName/:artistName.json", async (req, res) => {
-    // console.log("My Request Body: ", req.body);
     let artistName = req.params.artistName;
-
-    // console.log("Getting Input from Seaching Artist Field!");
-    // console.log("Artist Name: ", artistName);
 
     spotifyApi
         .searchArtists(artistName)
@@ -291,12 +279,9 @@ app.get("/artistName/:artistName.json", async (req, res) => {
 
 app.get("/getRelatedArtists/:artistId.json", function(req, res) {
     let artistId = req.params.artistId;
-    // console.log("Log my Artist Id in get Related: ", artistId);
 
     spotifyApi.getArtistRelatedArtists(artistId).then(
         function(data) {
-            // console.log("Something Happened");
-            // console.log(data.body);
             console.log(data.body.artists);
 
             const mappedArtists = data.body.artists.map(eachArtist => {
@@ -465,44 +450,48 @@ app.get("/createPlaylist/:playListName.json", function(req, res) {
 
 app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
     let artistName = req.params.artistName;
-    // console.log("Clicked in createPlaylistOutOfName: ", artistName);
-
-    let trackListForCreatingPlaylist;
 
     spotifyApi.searchArtists(artistName).then(
         function(data) {
-            // console.log("Id of Artist: ", data.body.artists.items[0].id);
-            let searchArtistId = data.body.artists.items[0].id;
+            // console.log("data.body.artists: ", data.body.artists);
+            // Filtering out the property that is exactly like Search Name
+
+            let searchArtistNameExact = data.body.artists.items.filter(
+                exactArtist => {
+                    return exactArtist.name == artistName;
+                }
+            );
+
+            let searchArtistId = searchArtistNameExact[0].id;
+
+            let artistPicUrlForTable = searchArtistNameExact[0].images[0].url;
+
+            console.log(
+                "SearchArtistName: ",
+                searchArtistNameExact[0].name,
+                " SearchArtistId: ",
+                searchArtistId,
+                " SearchArtistPicUrl: ",
+                artistPicUrlForTable
+            );
 
             spotifyApi
                 .getArtistRelatedArtists(searchArtistId)
                 .then(
                     function(data) {
-                        // console.log(data.body.artists);
-
-                        // console.log(
-                        //     "Length of Related Artists: ",
-                        //     data.body.artists.length
-                        // );
-
-                        let newList = data.body.artists.slice(0, 10);
-
-                        // console.log("New Length: ", newList.length);
+                        let newList = data.body.artists;
 
                         const mappedArtistsId = newList.map(eachArtist => {
                             const { id } = eachArtist;
 
                             return { id };
                         });
-                        // console.log("MappedArtistsId: ", mappedArtistsId);
 
                         const mappedArtistsIdFormat = mappedArtistsId.map(
                             eachTrack => {
                                 return eachTrack["id"];
                             }
                         );
-
-                        const list = [];
 
                         Promise.all([
                             getIdOfTracksForPlaylist(mappedArtistsIdFormat[0]),
@@ -514,7 +503,17 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                             getIdOfTracksForPlaylist(mappedArtistsIdFormat[6]),
                             getIdOfTracksForPlaylist(mappedArtistsIdFormat[7]),
                             getIdOfTracksForPlaylist(mappedArtistsIdFormat[8]),
-                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[9])
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[9]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[10]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[11]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[12]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[13]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[14]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[15]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[16]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[17]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[18]),
+                            getIdOfTracksForPlaylist(mappedArtistsIdFormat[19])
                         ]).then(results => {
                             // console.log("My Results: ", results);
 
@@ -527,17 +526,27 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                                 results[6],
                                 results[7],
                                 results[8],
-                                results[9]
+                                results[9],
+                                results[10],
+                                results[11],
+                                results[12],
+                                results[13],
+                                results[14],
+                                results[15],
+                                results[16],
+                                results[17],
+                                results[18],
+                                results[19]
                             );
 
-                            console.log("MyTrackIdArray: ", myTrackIdArray);
+                            // console.log("MyTrackIdArray: ", myTrackIdArray);
 
                             // Creating PlayList
 
                             spotifyApi
                                 .createPlaylist(
                                     req.session.spotify_id,
-                                    `Playlist for Related Artists of: ${artistName}`,
+                                    `${artistName} | Related Artists created by Sven`,
                                     {
                                         public: true
                                     }
@@ -552,6 +561,13 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                                             id,
                                             uri
                                         } = data.body;
+
+                                        let spotify_id = req.session.spotify_id;
+                                        let mainArtist = artistName;
+                                        let playlistName = `${artistName} | Related Artists created by Sven`;
+                                        let artistPic = artistPicUrlForTable;
+                                        let playListUrl = uri;
+
                                         spotifyApi
                                             .addTracksToPlaylist(
                                                 id,
@@ -559,9 +575,32 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                                             )
                                             .then(
                                                 function(data) {
-                                                    console.log(
-                                                        "Added tracks to playlist!"
-                                                    );
+                                                    // console.log(
+                                                    //     "Added tracks to playlist!"
+                                                    // );
+
+                                                    // Add Playlist to Database
+
+                                                    db.addPlaylist(
+                                                        spotify_id,
+                                                        playlistName,
+                                                        mainArtist,
+                                                        artistPic,
+                                                        playListUrl
+                                                    ).then(result => {
+                                                        // console.log(
+                                                        //     "Playlistdata in Table: ",
+                                                        //     result
+                                                        // );
+
+                                                        db.getPlaylists().then(
+                                                            playlists => {
+                                                                console.log(
+                                                                    "Done!"
+                                                                );
+                                                            }
+                                                        );
+                                                    });
                                                 },
                                                 function(err) {
                                                     console.log(
@@ -600,42 +639,27 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
             console.log("Error in getting related Artist: ", err);
         }
     ); // CLOSE SPOTIFY GET RELATED ARTIST
-
-    // console.log("MappedAristsId.length: ", mappedArtistId.length);
 });
 
-/////////////////////// WRITE FUNCTION FOR GETTING Tracks
+/////////////////////// WRITE FUNCTION FOR GETTING TRACKS
 
 function getIdOfTracksForPlaylist(artistName) {
-    console.log("Running");
     return new Promise((resolve, reject) => {
         spotifyApi.getArtistTopTracks(artistName, "from_token").then(
             function(data) {
                 const slicedTracksArray = data.body.tracks.slice(0, 3);
-                // console.log(
-                //     "slicedTracksArray: ",
-                //     slicedTracksArray
-                // );
 
                 const mappedTracksId = slicedTracksArray.map(eachTrack => {
                     const { uri } = eachTrack;
                     return { uri };
                 });
 
-                // YAY RIGHT FORMAT -- allArray
                 const trackIdsFormat = mappedTracksId.map(eachTrack => {
                     return eachTrack["uri"];
                 });
 
-                console.log(trackIdsFormat);
+                // console.log(trackIdsFormat);
                 resolve(trackIdsFormat);
-
-                // list.push(trackIdsFormat);
-                // console.log("My List: ", list);
-
-                // const allArray = trackIdsFormat.concat(
-                //     trackIdsFormatTwo
-                // );
             },
             function(err) {
                 console.log("Something went wrong!", err);
