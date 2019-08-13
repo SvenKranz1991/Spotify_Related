@@ -89,3 +89,8 @@ h1 {
 .ArtistPicture {
     border-radius: 50%;
 }
+
+.artistCard {
+    width: 400px;
+    height: 400px;
+}

@@ -247,22 +247,23 @@ app.get("/artistName/:artistName.json", async (req, res) => {
         .searchArtists(artistName)
         .then(
             function(data) {
-                // console.log("Search artists:", data.body.artists.items[0]);
-                // console.log(
-                //     "Found Artist Name: ",
-                //     data.body.artists.items[0].name
-                // );
-                // console.log(
-                //     "Image of Artist: ",
-                //     data.body.artists.items[0].images[0].url
-                // );
-                // console.log("Id of Artist: ", data.body.artists.items[0].id);
+                let searchArtistNameExact = data.body.artists.items.filter(
+                    exactArtist => {
+                        return exactArtist.name == artistName;
+                    }
+                );
+
+                let searchArtistId = searchArtistNameExact[0].id;
+
+                let artistPicUrlForTable =
+                    searchArtistNameExact[0].images[0].url;
 
                 res.json({
-                    SearchArtistPicture:
-                        data.body.artists.items[0].images[0].url,
-                    IdOfArtist: data.body.artists.items[0].id,
-                    SearchArtistName: data.body.artists.items[0].name
+                    SearchArtistPicture: artistPicUrlForTable,
+                    IdOfArtist: searchArtistId,
+                    SearchArtistName: data.body.artists.items[0].name,
+                    SearchArtistUrl:
+                        searchArtistNameExact[0].external_urls.spotify
                 });
             },
             function(err) {
@@ -639,6 +640,13 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
             console.log("Error in getting related Artist: ", err);
         }
     ); // CLOSE SPOTIFY GET RELATED ARTIST
+});
+
+app.get("/app/getPlaylists", function(req, res) {
+    db.getPlaylists().then(playlists => {
+        console.log("My Playlists: ", playlists.rows);
+        res.json(playlists.rows);
+    });
 });
 
 /////////////////////// WRITE FUNCTION FOR GETTING TRACKS

@@ -2,12 +2,14 @@ import React from "react";
 import axios from "./axios";
 import SpotifyPlayer from "react-spotify-player";
 import RelatedArtists from "./relatedArtists";
+import { Route, BrowserRouter, Link } from "react-router-dom";
+import ShowingCreatedPlaylists from "./showingCreatedPlaylists";
 
 const size = {
     width: "100%",
     height: 300
 };
-const view = "list"; // or 'coverart'
+const view = "coverart"; // or 'coverart'
 const theme = "white"; // or 'white'
 
 console.log("Log axios for sanity: ", axios);
@@ -74,7 +76,8 @@ export default class App extends React.Component {
                 let {
                     IdOfArtist,
                     SearchArtistName,
-                    SearchArtistPicture
+                    SearchArtistPicture,
+                    SearchArtistUrl
                 } = data.data;
 
                 this.setState({
@@ -82,6 +85,7 @@ export default class App extends React.Component {
                     SearchArtistName: SearchArtistName,
                     SearchArtistPicture: SearchArtistPicture,
                     showResultOfSearch: true,
+                    SearchArtistUrl: SearchArtistUrl,
                     nothingFound: false
                 });
             })
@@ -188,27 +192,6 @@ export default class App extends React.Component {
                         playListCreated: true
                     });
                 }
-
-                // if (data.data.ooops) {
-                //     return this.setState({
-                //         nothingFound: true,
-                //         showResultOfSearch: false
-                //     });
-                // }
-                //
-                // let {
-                //     IdOfArtist,
-                //     SearchArtistName,
-                //     SearchArtistPicture
-                // } = data.data;
-                //
-                // this.setState({
-                //     IdOfArtist: IdOfArtist,
-                //     SearchArtistName: SearchArtistName,
-                //     SearchArtistPicture: SearchArtistPicture,
-                //     showResultOfSearch: true,
-                //     nothingFound: false
-                // });
             })
             .catch(err => {
                 console.log("Error in finding Artist: ", err);
@@ -224,132 +207,257 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <hr className="horiLine" />
-                <br />
-                <h2>BigBadButton!</h2>
-                <br />
-                <input
-                    type="text"
-                    placeholder="Artist Name"
-                    name="bigbadbutton"
-                    className="textInput"
-                    onChange={this.handleChangeBigBadButton}
-                />
-                <br />
-                <button
-                    className="button"
-                    onClick={this.handleSubmitBigBadButton}
-                >
-                    Search Artist
-                </button>
-                <br />
-                <h2>USER INFO</h2>
-                <p>
-                    Spotify Id: {this.state.spotify_id} --- E-Mail:{" "}
-                    {this.state.email} --- Profile Url: {this.state.profileUrl}
-                </p>
-                <img src={this.state.photo} height="100px" width="100px" />
-                <br />
-                <h1>Spotify Playlist Generator</h1>
+                <BrowserRouter>
+                    <header>
+                        <Link to="/app">Home</Link>
+                        <Link to="/app/playlists">Playlists</Link>
+                    </header>
 
-                <br />
-                <hr className="horiLine" />
-                <br />
-                <h2>Create a Playlist out of the related Artists!</h2>
-                <br />
-                <input
-                    type="text"
-                    placeholder="Artist Name"
-                    name="artistName"
-                    className="textInput"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <button className="button" onClick={this.handleSubmit}>
-                    Search Artist
-                </button>
-                <br />
-                <hr className="horiLine" />
-                {this.state.showResultOfSearch && (
-                    <div>
-                        <h1>Result of Search Artist!</h1>
-                        <h2>Artist Name: {this.state.SearchArtistName}</h2>
-                        <h3>Artist Id: {this.state.IdOfArtist}</h3>
-                        <img
-                            src={this.state.SearchArtistPicture}
-                            width="300px"
-                            height="300px"
-                            className="ArtistPicture"
+                    <div className="mainbody">
+                        <div>
+                            <Route
+                                exact
+                                path="/app"
+                                render={() => {
+                                    return (
+                                        <div>
+                                            <hr className="horiLine" />
+                                            <br />
+                                            <h2>
+                                                Creating Playlist out of Artist!
+                                                Single Click
+                                            </h2>
+                                            <br />
+                                            <input
+                                                type="text"
+                                                placeholder="Artist Name"
+                                                name="bigbadbutton"
+                                                className="textInput"
+                                                onChange={
+                                                    this
+                                                        .handleChangeBigBadButton
+                                                }
+                                            />
+                                            <br />
+                                            <button
+                                                className="button"
+                                                onClick={
+                                                    this
+                                                        .handleSubmitBigBadButton
+                                                }
+                                            >
+                                                Search Artist
+                                            </button>
+                                            <br />
+                                            <h2>USER INFO</h2>
+                                            <p>
+                                                Spotify Id:{" "}
+                                                {this.state.spotify_id} ---
+                                                E-Mail: {this.state.email} ---
+                                                Profile Url:{" "}
+                                                {this.state.profileUrl}
+                                            </p>
+                                            <img
+                                                src={this.state.photo}
+                                                height="100px"
+                                                width="100px"
+                                            />
+                                            <br />
+                                            <h1>Spotify Playlist Generator</h1>
+
+                                            <br />
+                                            <hr className="horiLine" />
+                                            <br />
+                                            <h2>
+                                                Create a Playlist out of the
+                                                related Artists!
+                                            </h2>
+                                            <br />
+                                            <input
+                                                type="text"
+                                                placeholder="Artist Name"
+                                                name="artistName"
+                                                className="textInput"
+                                                onChange={this.handleChange}
+                                            />
+                                            <br />
+                                            <button
+                                                className="button"
+                                                onClick={this.handleSubmit}
+                                            >
+                                                Search Artist
+                                            </button>
+                                            <br />
+                                            <hr className="horiLine" />
+                                            {this.state.showResultOfSearch && (
+                                                <div>
+                                                    <h1>
+                                                        Result of Search Artist!
+                                                    </h1>
+                                                    <h2>
+                                                        Artist Name:{" "}
+                                                        {
+                                                            this.state
+                                                                .SearchArtistName
+                                                        }
+                                                    </h2>
+                                                    <h3>
+                                                        Artist Id:{" "}
+                                                        {this.state.IdOfArtist}
+                                                    </h3>
+                                                    <a
+                                                        href={
+                                                            this.state
+                                                                .SearchArtistUrl
+                                                        }
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <img
+                                                            src={
+                                                                this.state
+                                                                    .SearchArtistPicture
+                                                            }
+                                                            width="300px"
+                                                            height="300px"
+                                                            className="ArtistPicture"
+                                                        />
+                                                    </a>
+                                                    <button
+                                                        className="button"
+                                                        onClick={
+                                                            this.clearSearch
+                                                        }
+                                                    >
+                                                        If its not you can
+                                                        clear!
+                                                    </button>
+                                                    <button
+                                                        className="button"
+                                                        onClick={
+                                                            this
+                                                                .getRelatedArtists
+                                                        }
+                                                    >
+                                                        Yes, thats perfect! Get
+                                                        me the related Artists!
+                                                    </button>
+                                                    <RelatedArtists
+                                                        artistId={
+                                                            this.state
+                                                                .IdOfArtist
+                                                        }
+                                                    />
+
+                                                    <hr className="horiLine" />
+                                                    <h1>
+                                                        Testing getting Top
+                                                        Tracks
+                                                    </h1>
+                                                    <hr className="horiLine" />
+                                                    <button
+                                                        className="button"
+                                                        onClick={
+                                                            this.getTopTracks
+                                                        }
+                                                    >
+                                                        Yes, get me the Top
+                                                        Tracks!
+                                                    </button>
+                                                </div>
+                                            )}
+                                            {this.state.nothingFound && (
+                                                <div>
+                                                    Nothing Found! Be precise
+                                                    with search Name!
+                                                </div>
+                                            )}
+
+                                            <hr className="horiLine" />
+                                            <h1>CREATE PLAYLIST SECTION</h1>
+                                            <input
+                                                type="text"
+                                                placeholder="Playlist Name"
+                                                name="playlistName"
+                                                className="textInput"
+                                                onChange={
+                                                    this
+                                                        .handleChangeForCreatingPlaylist
+                                                }
+                                            />
+                                            <br />
+                                            <button
+                                                className="button"
+                                                onClick={
+                                                    this
+                                                        .handleSubmitForCreatingPlaylist
+                                                }
+                                            >
+                                                Create Playlist
+                                            </button>
+                                            {this.state.playListCreated && (
+                                                <div>
+                                                    <hr className="horiLine" />
+                                                    <h2>
+                                                        -------------Playlist
+                                                        Created-----------------
+                                                    </h2>
+                                                    <p>
+                                                        Name of Playlist:{" "}
+                                                        {
+                                                            this.state
+                                                                .playListName
+                                                        }
+                                                    </p>
+                                                    <p>
+                                                        Id of Playlist:{" "}
+                                                        {this.state.playListId}
+                                                    </p>
+                                                    <SpotifyPlayer
+                                                        uri={
+                                                            this.state
+                                                                .playListUri
+                                                        }
+                                                        size={size}
+                                                        view={view}
+                                                        theme={theme}
+                                                    />
+                                                    <a
+                                                        href={
+                                                            this.state
+                                                                .linkToPlayList
+                                                        }
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Link to the PlayList
+                                                    </a>
+                                                    <a
+                                                        href={
+                                                            this.state
+                                                                .playListUri
+                                                        }
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Open in Spotify!
+                                                    </a>
+
+                                                    <hr className="horiLine" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                }}
+                            />
+                        </div>
+                        <Route
+                            exact
+                            path="/app/playlists"
+                            component={ShowingCreatedPlaylists}
                         />
-                        <button className="button" onClick={this.clearSearch}>
-                            If its not you can clear!
-                        </button>
-                        <button
-                            className="button"
-                            onClick={this.getRelatedArtists}
-                        >
-                            Yes, thats perfect! Get me the related Artists!
-                        </button>
-                        <RelatedArtists artistId={this.state.IdOfArtist} />
-
-                        <hr className="horiLine" />
-                        <h1>Testing getting Top Tracks</h1>
-                        <hr className="horiLine" />
-                        <button className="button" onClick={this.getTopTracks}>
-                            Yes, get me the Top Tracks!
-                        </button>
                     </div>
-                )}
-                {this.state.nothingFound && (
-                    <div>Nothing Found! Be precise with search Name!</div>
-                )}
-
-                <hr className="horiLine" />
-                <h1>CREATE PLAYLIST SECTION</h1>
-                <input
-                    type="text"
-                    placeholder="Playlist Name"
-                    name="playlistName"
-                    className="textInput"
-                    onChange={this.handleChangeForCreatingPlaylist}
-                />
-                <br />
-                <button
-                    className="button"
-                    onClick={this.handleSubmitForCreatingPlaylist}
-                >
-                    Create Playlist
-                </button>
-                {this.state.playListCreated && (
-                    <div>
-                        <hr className="horiLine" />
-                        <h2>-------------Playlist Created-----------------</h2>
-                        <p>Name of Playlist: {this.state.playListName}</p>
-                        <p>Id of Playlist: {this.state.playListId}</p>
-                        <SpotifyPlayer
-                            uri={this.state.playListUri}
-                            size={size}
-                            view={view}
-                            theme={theme}
-                        />
-                        <a
-                            href={this.state.linkToPlayList}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Link to the PlayList
-                        </a>
-                        <a
-                            href={this.state.playListUri}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Open in Spotify!
-                        </a>
-
-                        <hr className="horiLine" />
-                    </div>
-                )}
+                </BrowserRouter>
             </div>
         );
     }
