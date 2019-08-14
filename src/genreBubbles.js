@@ -32,7 +32,13 @@ export default function RelatedArtists(props) {
             {genres &&
                 genres.map(bubble => (
                     <div key={bubble.id}>
-                        <p>{bubble.gen.genre}</p>
+                        <a
+                            href={"https://lmgtfy.com/?q=" + bubble.gen.genre}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <p>{bubble.gen.genre}</p>
+                        </a>
                     </div>
                 ))}
         </div>

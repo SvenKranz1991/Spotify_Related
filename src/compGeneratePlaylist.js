@@ -2,8 +2,6 @@ import React from "react";
 import axios from "./axios";
 import RelatedArtists from "./relatedArtists";
 
-import SpotifyPlayerComponent from "./spotifyPlayerComponent";
-
 export default class CreatePlaylist extends React.Component {
     constructor(props) {
         super(props);
