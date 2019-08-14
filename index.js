@@ -1,5 +1,3 @@
-// SERVER SETUP
-
 const express = require("express");
 const session = require("express-session");
 const app = express();
@@ -856,6 +854,90 @@ app.get("/app/getPlaylists", function(req, res) {
 app.get("/trackList", function(req, res) {
     let tracklist = req.query.tracks;
     let artistIds = req.query.artistIds;
+
+    Promise.all([
+        getInfoOfTracksForPlaylist(artistIds[0]),
+        getInfoOfTracksForPlaylist(artistIds[1]),
+        getInfoOfTracksForPlaylist(artistIds[2]),
+        getInfoOfTracksForPlaylist(artistIds[3]),
+        getInfoOfTracksForPlaylist(artistIds[4]),
+        getInfoOfTracksForPlaylist(artistIds[5]),
+        getInfoOfTracksForPlaylist(artistIds[6]),
+        getInfoOfTracksForPlaylist(artistIds[7]),
+        getInfoOfTracksForPlaylist(artistIds[8]),
+        getInfoOfTracksForPlaylist(artistIds[9]),
+        getInfoOfTracksForPlaylist(artistIds[10]),
+        getInfoOfTracksForPlaylist(artistIds[11]),
+        getInfoOfTracksForPlaylist(artistIds[12]),
+        getInfoOfTracksForPlaylist(artistIds[13]),
+        getInfoOfTracksForPlaylist(artistIds[14]),
+        getInfoOfTracksForPlaylist(artistIds[15]),
+        getInfoOfTracksForPlaylist(artistIds[16]),
+        getInfoOfTracksForPlaylist(artistIds[17]),
+        getInfoOfTracksForPlaylist(artistIds[18]),
+        getInfoOfTracksForPlaylist(artistIds[19])
+    ])
+        .then(results => {
+            let trackInfoList = results[0].concat(
+                results[1],
+                results[2],
+                results[3],
+                results[4],
+                results[5],
+                results[6],
+                results[7],
+                results[8],
+                results[9],
+                results[10],
+                results[11],
+                results[12],
+                results[13],
+                results[14],
+                results[15],
+                results[16],
+                results[17],
+                results[18],
+                results[19]
+            );
+
+            const formatTrackInfoList = trackInfoList.map(eachTrack => {
+                const {
+                    id,
+                    uri,
+                    name,
+                    artists,
+                    popularity,
+                    external_urls,
+                    album
+                } = eachTrack;
+
+                const linkToSpotify = external_urls.spotify;
+                const artistImage = album.images.slice(0, 1);
+                const trackImageLink = artistImage[0].url;
+                const interpret = artists[0].name;
+
+                return {
+                    id,
+                    uri,
+                    name,
+                    interpret,
+                    popularity,
+                    linkToSpotify,
+                    trackImageLink
+                };
+            });
+
+            res.json({
+                formatTrackInfoList
+            });
+
+            console.log("My Track Info List: ", formatTrackInfoList);
+        })
+        .catch(err => {
+            console.log("Catch my info Error: ", err);
+        });
+    // console.log("My Results: ", results);
+
     // console.log("Tracklist: ", tracklist);
     // console.log("ArtistIds: ", artistIds);
     // console.log("Req: ", req.query.artistIds);
@@ -931,18 +1013,18 @@ function getInfoOfTracksForPlaylist(artistName) {
             function(data) {
                 const slicedTracksArray = data.body.tracks.slice(0, 3);
 
-                console.log("Tracks: ", slicedTracksArray);
-                const mappedTracksId = slicedTracksArray.map(eachTrack => {
-                    const { uri } = eachTrack;
-                    return { uri };
-                });
-
-                const trackIdsFormat = mappedTracksId.map(eachTrack => {
-                    return eachTrack["uri"];
-                });
+                // console.log("Tracks: ", slicedTracksArray);
+                // const mappedTracksId = slicedTracksArray.map(eachTrack => {
+                //     const { uri } = eachTrack;
+                //     return { uri };
+                // });
+                //
+                // const trackIdsFormat = mappedTracksId.map(eachTrack => {
+                //     return eachTrack["uri"];
+                // });
 
                 // console.log(trackIdsFormat);
-                resolve(trackIdsFormat);
+                resolve(slicedTracksArray);
             },
             function(err) {
                 console.log("Something went wrong!", err);
