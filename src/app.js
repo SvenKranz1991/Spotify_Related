@@ -4,6 +4,7 @@ import ShowingCreatedPlaylists from "./showingCreatedPlaylists";
 import SingleGeneratePlaylist from "./singleGeneratePlaylist";
 import CompGeneratePlaylist from "./compGeneratePlaylist";
 import LoggedUser from "./loggedUser";
+import SearchingSingleTrackFeature from "./searchingSingleTrackFeature";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -25,6 +26,9 @@ export default class App extends React.Component {
                         </Link>
                         <Link to="/app/compCreatePlaylist">
                             CreatePlaylist - Comp
+                        </Link>
+                        <Link to="/app/searchingSingleTrackFeature">
+                            Searching for Single Track
                         </Link>
                     </header>
 
@@ -49,6 +53,10 @@ export default class App extends React.Component {
                         <Route
                             path="/app/justCreatePlaylist"
                             component={SingleGeneratePlaylist}
+                        />
+                        <Route
+                            path="/app/searchingSingleTrackFeature"
+                            component={SearchingSingleTrackFeature}
                         />
                     </div>
                 </BrowserRouter>

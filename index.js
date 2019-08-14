@@ -969,6 +969,59 @@ app.get("/audioFeature/:trackId.json", function(req, res) {
     console.log("My Track IdClick: ", trackId);
 });
 
+app.get("/singleTrack/:trackName.json", function(req, res) {
+    let trackName = req.params.trackName;
+
+    spotifyApi.searchTracks(trackName).then(
+        function(data) {
+            // console.log("Search by User TrackName", data.body.tracks.items);
+            // console.log("Search only body: ", data.body);
+
+            let searchTrackNameExact = data.body.tracks.items.filter(
+                exactName => {
+                    return exactName.name == trackName;
+                }
+            );
+
+            const formatTrackInfoList = searchTrackNameExact.map(eachTrack => {
+                const {
+                    id,
+                    uri,
+                    name,
+                    artists,
+                    popularity,
+                    external_urls,
+                    album
+                } = eachTrack;
+
+                const linkToSpotify = external_urls.spotify;
+                const artistImage = album.images.slice(0, 1);
+                const trackImageLink = artistImage[0].url;
+                const interpret = artists[0].name;
+
+                return {
+                    id,
+                    uri,
+                    name,
+                    interpret,
+                    popularity,
+                    linkToSpotify,
+                    trackImageLink
+                };
+            });
+
+            res.json({
+                formatTrackInfoList
+            });
+        },
+        function(err) {
+            console.error(err);
+        }
+    );
+
+    console.log("Trackname for Single Track: ", trackName);
+});
+
 /////////////////////// WRITE FUNCTION FOR GETTING TRACKS
 
 function getIdOfTracksForPlaylist(artistName) {
