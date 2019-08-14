@@ -936,35 +936,6 @@ app.get("/trackList", function(req, res) {
         .catch(err => {
             console.log("Catch my info Error: ", err);
         });
-    // console.log("My Results: ", results);
-
-    // console.log("Tracklist: ", tracklist);
-    // console.log("ArtistIds: ", artistIds);
-    // console.log("Req: ", req.query.artistIds);
-
-    // let newTrackList = tracklist.map(track => {
-    //     let slicedTrackName = track.slice(14);
-    //
-    //     return slicedTrackName;
-    // });
-
-    // console.log("NewTrackList: ", newTrackList);
-    // spotifyApi.getTracks(newTrackList, "from_token").then(
-    //     function(data) {
-    //         console.log("TrackList: ", data.body.tracks);
-    //     },
-    //     function(err) {
-    //         console.log("Error in getting Tracklsit: ", err);
-    //     }
-    // );
-    // spotifyApi.getAudioFeaturesForTracks(["2WMRd3xAb9FwXopCRNWDq1"]).then(
-    //     function(data) {
-    //         console.log("Audio Features: ", data.body);
-    //     },
-    //     function(err) {
-    //         console.log("Error in getting Tracklist", err);
-    //     }
-    // );
 });
 
 // waaay to complicated
@@ -977,6 +948,24 @@ app.get("/trackList", function(req, res) {
 //         console.log("Error in getting Analysis", err);
 //     }
 // );
+
+app.get("/audioFeature/:trackId.json", function(req, res) {
+    let trackId = req.params.trackId;
+
+    spotifyApi.getAudioFeaturesForTrack(trackId).then(
+        function(data) {
+            console.log(data.body);
+            res.json({
+                data: data.body
+            });
+        },
+        function(err) {
+            console.log("Error in Audio Feature: ", err);
+        }
+    );
+
+    console.log("My Track IdClick: ", trackId);
+});
 
 /////////////////////// WRITE FUNCTION FOR GETTING TRACKS
 
