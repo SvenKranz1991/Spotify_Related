@@ -383,13 +383,13 @@ app.get("/getRelatedArtists/:artistId.json", function(req, res) {
 
 app.get("/topTracksOfEachArtist/:artistId.json", function(req, res) {
     let artistId = req.params.artistId;
-    console.log("Something Happened");
+    // console.log("Something Happened");
 
     spotifyApi.getArtistTopTracks(artistId, "from_token").then(
         function(data) {
-            console.log(data.body.tracks);
+            // console.log(data.body.tracks);
             const slicedTracksArray = data.body.tracks.slice(0, 3);
-            console.log("slicedTracksArray: ", slicedTracksArray);
+            // console.log("slicedTracksArray: ", slicedTracksArray);
             const mappedTracks = slicedTracksArray.map(eachTrack => {
                 const { name, popularity, id, uri } = eachTrack;
 
@@ -407,20 +407,20 @@ app.get("/topTracksOfEachArtist/:artistId.json", function(req, res) {
 
             // YAY RIGHT FORMAT -- allArray
             const trackIdsFormat = mappedTracksId.map(eachTrack => {
-                console.log("For Format: ", eachTrack);
+                // console.log("For Format: ", eachTrack);
                 return eachTrack["uri"];
             });
 
-            const trackIdsFormatTwo = mappedTracksId.map(eachTrack => {
-                console.log("For Format: ", eachTrack);
-                return eachTrack["uri"];
-            });
-            console.log("MappedTracks: ", mappedTracks);
-            console.log("MappedTracksId: ", mappedTracksId);
-            console.log("TrackIdsFormat: ", trackIdsFormat);
-            console.log("TrackIdsFormatTwo: ", trackIdsFormatTwo);
-            const allArray = trackIdsFormat.concat(trackIdsFormatTwo);
-            console.log("Now it should be merged: ", allArray);
+            // const trackIdsFormatTwo = mappedTracksId.map(eachTrack => {
+            //     console.log("For Format: ", eachTrack);
+            //     return eachTrack["uri"];
+            // });
+            // console.log("MappedTracks: ", mappedTracks);
+            // console.log("MappedTracksId: ", mappedTracksId);
+            // console.log("TrackIdsFormat: ", trackIdsFormat);
+            // console.log("TrackIdsFormatTwo: ", trackIdsFormatTwo);
+            // const allArray = trackIdsFormat.concat(trackIdsFormatTwo);
+            // console.log("Now it should be merged: ", allArray);
         },
         function(err) {
             console.log("Something went wrong!", err);
@@ -599,7 +599,9 @@ app.get("/createPlaylist/:playListName.json/:artistId.json", function(
                                                 external_urls.spotify,
                                             playListName: name,
                                             playListId: id,
-                                            playListUri: uri
+                                            playListUri: uri,
+                                            wholeIds: myTrackIdArray,
+                                            mappedArtistsIdFormat: mappedArtistsIdFormat
                                         });
                                     },
                                     function(err) {
@@ -812,12 +814,13 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                                                 }
                                             );
 
-                                        res.json({
+                                        spotifyApi.res.json({
                                             linkToPlayList:
                                                 external_urls.spotify,
                                             playListName: name,
                                             playListId: id,
-                                            playListUri: uri
+                                            playListUri: uri,
+                                            wholeIds: myTrackIdArray
                                         });
                                     },
                                     function(err) {
@@ -845,10 +848,53 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
 
 app.get("/app/getPlaylists", function(req, res) {
     db.getPlaylists().then(playlists => {
-        console.log("My Playlists: ", playlists.rows);
+        // console.log("My Playlists: ", playlists.rows);
         res.json(playlists.rows);
     });
 });
+
+app.get("/trackList", function(req, res) {
+    let tracklist = req.query.tracks;
+    let artistIds = req.query.artistIds;
+    // console.log("Tracklist: ", tracklist);
+    // console.log("ArtistIds: ", artistIds);
+    // console.log("Req: ", req.query.artistIds);
+
+    // let newTrackList = tracklist.map(track => {
+    //     let slicedTrackName = track.slice(14);
+    //
+    //     return slicedTrackName;
+    // });
+
+    // console.log("NewTrackList: ", newTrackList);
+    // spotifyApi.getTracks(newTrackList, "from_token").then(
+    //     function(data) {
+    //         console.log("TrackList: ", data.body.tracks);
+    //     },
+    //     function(err) {
+    //         console.log("Error in getting Tracklsit: ", err);
+    //     }
+    // );
+    // spotifyApi.getAudioFeaturesForTracks(["2WMRd3xAb9FwXopCRNWDq1"]).then(
+    //     function(data) {
+    //         console.log("Audio Features: ", data.body);
+    //     },
+    //     function(err) {
+    //         console.log("Error in getting Tracklist", err);
+    //     }
+    // );
+});
+
+// waaay to complicated
+
+// spotifyApi.getAudioAnalysisForTrack("2WMRd3xAb9FwXopCRNWDq1").then(
+//     function(data) {
+//         console.log("Audio Analysis: ", data.body);
+//     },
+//     function(err) {
+//         console.log("Error in getting Analysis", err);
+//     }
+// );
 
 /////////////////////// WRITE FUNCTION FOR GETTING TRACKS
 
@@ -856,8 +902,36 @@ function getIdOfTracksForPlaylist(artistName) {
     return new Promise((resolve, reject) => {
         spotifyApi.getArtistTopTracks(artistName, "from_token").then(
             function(data) {
+                // console.log("DATA: ", data.body.tracks);
                 const slicedTracksArray = data.body.tracks.slice(0, 3);
 
+                const mappedTracksId = slicedTracksArray.map(eachTrack => {
+                    const { uri } = eachTrack;
+                    return { uri };
+                });
+
+                const trackIdsFormat = mappedTracksId.map(eachTrack => {
+                    return eachTrack["uri"];
+                });
+
+                // console.log(trackIdsFormat);
+                resolve(trackIdsFormat);
+            },
+            function(err) {
+                console.log("Something went wrong!", err);
+                reject(err);
+            }
+        );
+    });
+}
+
+function getInfoOfTracksForPlaylist(artistName) {
+    return new Promise((resolve, reject) => {
+        spotifyApi.getArtistTopTracks(artistName, "from_token").then(
+            function(data) {
+                const slicedTracksArray = data.body.tracks.slice(0, 3);
+
+                console.log("Tracks: ", slicedTracksArray);
                 const mappedTracksId = slicedTracksArray.map(eachTrack => {
                     const { uri } = eachTrack;
                     return { uri };

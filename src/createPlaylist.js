@@ -1,21 +1,24 @@
 import React from "react";
 import axios from "./axios";
 import SpotifyPlayerComponent from "./spotifyPlayerComponent";
+import TrackList from "./trackList";
 
 export default class CreatePlaylist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            playListCreated: false
+            playListCreated: false,
+            giveList: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.showList = this.showList.bind(this);
     }
 
     handleSubmit() {
         let playListName = this.props.searchArtistName;
         let artistId = this.props.artistId;
 
-        console.log("My props in create Playlist: ", this.props);
+        // console.log("My props in create Playlist: ", this.props);
 
         axios
             .get(`/createPlaylist/${playListName}.json/${artistId}.json`)
@@ -24,14 +27,18 @@ export default class CreatePlaylist extends React.Component {
                     linkToPlayList,
                     playListId,
                     playListName,
-                    playListUri
+                    playListUri,
+                    wholeIds,
+                    mappedArtistsIdFormat
                 } = data.data;
                 console.log(
                     "Everything needed: ",
                     linkToPlayList,
                     playListId,
                     playListName,
-                    playListUri
+                    playListUri,
+                    wholeIds,
+                    mappedArtistsIdFormat
                 );
                 if (data) {
                     this.setState({
@@ -39,10 +46,17 @@ export default class CreatePlaylist extends React.Component {
                         playListUri: playListUri,
                         playListName: playListName,
                         playListId: playListId,
-                        playListCreated: true
+                        playListCreated: true,
+                        wholeIds: wholeIds,
+                        mappedArtistsIdFormat: mappedArtistsIdFormat
                     });
                 }
             });
+    }
+    showList(e) {
+        this.setState({
+            giveList: true
+        });
     }
     render() {
         return (
@@ -67,6 +81,23 @@ export default class CreatePlaylist extends React.Component {
                             playListId={this.state.playListId}
                             uri={this.state.playListUri}
                             href={this.state.linkToPlayList}
+                        />
+                    </div>
+                )}
+
+                {this.state.playListCreated && (
+                    <div>
+                        <button onClick={this.showList}>
+                            Show List and Features
+                        </button>
+                    </div>
+                )}
+
+                {this.state.giveList && (
+                    <div>
+                        <TrackList
+                            trackList={this.state.wholeIds}
+                            artistIdFormat={this.state.mappedArtistsIdFormat}
                         />
                     </div>
                 )}
