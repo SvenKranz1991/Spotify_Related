@@ -82,9 +82,7 @@ export default class TrackRows extends React.Component {
                             </button>
                             {this.state.showAudioFeature == list.id && (
                                 <div>
-                                    <AudioFeature
-                                        trackId={this.state.showAudioFeature}
-                                    />
+                                    <AudioFeature trackId={list.id} />
                                 </div>
                             )}
 
