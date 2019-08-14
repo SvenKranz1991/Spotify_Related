@@ -652,6 +652,7 @@ app.get("/createPlaylist/:playListName.json/:artistId.json", function(
 
 app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
     let artistName = req.params.artistName;
+    console.log("ArtistName: ", artistName);
 
     spotifyApi.searchArtists(artistName).then(
         function(data) {
@@ -812,13 +813,14 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                                                 }
                                             );
 
-                                        spotifyApi.res.json({
+                                        res.json({
                                             linkToPlayList:
                                                 external_urls.spotify,
                                             playListName: name,
                                             playListId: id,
                                             playListUri: uri,
-                                            wholeIds: myTrackIdArray
+                                            wholeIds: myTrackIdArray,
+                                            mappedArtistsIdFormat: mappedArtistsIdFormat
                                         });
                                     },
                                     function(err) {

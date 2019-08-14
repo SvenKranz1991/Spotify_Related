@@ -1,15 +1,18 @@
 import React from "react";
 import axios from "./axios";
 import SpotifyPlayerComponent from "./spotifyPlayerComponent";
+import TrackList from "./trackList";
 
 export default class SingleGeneratePlaylist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showRelated: false
+            showRelated: false,
+            giveList: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.showList = this.showList.bind(this);
     }
     componentDidMount() {
         console.log("Mounted single!");
@@ -26,7 +29,9 @@ export default class SingleGeneratePlaylist extends React.Component {
                     linkToPlayList,
                     playListId,
                     playListName,
-                    playListUri
+                    playListUri,
+                    wholeIds,
+                    mappedArtistsIdFormat
                 } = data.data;
                 console.log(
                     "Everything needed: ",
@@ -41,7 +46,9 @@ export default class SingleGeneratePlaylist extends React.Component {
                         playListUri: playListUri,
                         playListName: playListName,
                         playListId: playListId,
-                        playListCreated: true
+                        playListCreated: true,
+                        wholeIds: wholeIds,
+                        mappedArtistsIdFormat: mappedArtistsIdFormat
                     });
                 }
             })
@@ -53,6 +60,11 @@ export default class SingleGeneratePlaylist extends React.Component {
         console.log("e: ", e.target.name, e.target.value);
         this.setState({
             [e.target.name]: e.target.value
+        });
+    }
+    showList(e) {
+        this.setState({
+            giveList: true
         });
     }
     render() {
@@ -81,6 +93,22 @@ export default class SingleGeneratePlaylist extends React.Component {
                             playListId={this.state.playListId}
                             uri={this.state.playListUri}
                             href={this.state.linkToPlayList}
+                        />
+                    </div>
+                )}
+                {this.state.playListCreated && (
+                    <div>
+                        <button onClick={this.showList}>
+                            Show List and Features
+                        </button>
+                    </div>
+                )}
+
+                {this.state.giveList && (
+                    <div>
+                        <TrackList
+                            trackList={this.state.wholeIds}
+                            artistIdFormat={this.state.mappedArtistsIdFormat}
                         />
                     </div>
                 )}
