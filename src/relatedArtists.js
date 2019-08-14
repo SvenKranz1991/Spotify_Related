@@ -1,70 +1,73 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import GenreBubbles from "./genreBubbles";
+import CreatePlaylist from "./createPlaylist";
 
 export default function RelatedArtists(props) {
     const [artists, setArtists] = useState();
-    const [getRelated, setRelated] = useState(false);
+    const [relArtList, setArtList] = useState();
 
-    console.log("My getRelated: ", getRelated);
-    console.log("Artists: ", artists);
-    console.log("Artists: ", artists);
-    useEffect(
-        () => {
-            // console.log("Has Some Effect");
-            let artistId = props.artistId;
-            console.log("Clicked");
-            axios
-                .get(`/getRelatedArtists/${artistId}.json`)
-                .then(result => {
-                    console.log("Artists Data: ", result);
-                    console.log("TypeOfArtistData: ", typeof result.data);
-                    setArtists(result.data);
-                })
-                .catch(err => {
-                    console.log("Error in getting relatedArtists: ", err);
-                });
-        },
-        [getRelated]
-    );
+    console.log("relArtList: ", relArtList);
+
+    console.log("My props in related Artists: ", props);
+    useEffect(() => {
+        let artistId = props.artistId;
+
+        axios
+            .get(`/getRelatedArtists/${artistId}.json`)
+            .then(result => {
+                console.log("Artist Ids List: ", result.data.wholeArtistsId);
+                console.log(
+                    "MappedRelativeArtists: ",
+                    result.data.mappedRelativeArtists
+                );
+                setArtists(result.data.mappedRelativeArtists);
+                setArtList(result.data.wholeArtistsId);
+            })
+            .catch(err => {
+                console.log("Error in getting relatedArtists: ", err);
+            });
+    }, []);
 
     return (
         <div className="relatedArtistsWrapper">
-            <button className="button" onClick={() => setRelated(true)}>
-                Yes, thats perfect! Get me the related Artists!
-            </button>
-
-            {getRelated && (
-                <div>
-                    <h3>
-                        Related Artists to SearchArtistName - make it dynamic!
-                    </h3>
-                    <br />
-                    <hr className="horiLine" />
-                    <br />
-                </div>
-            )}
+            <div>
+                <h3>Related Artists of {props.searchArtistName}!</h3>
+                <br />
+                <hr className="horiLine" />
+                <br />
+            </div>
 
             <hr className="horiLine" />
 
             {artists &&
-                artists.map(artist => {
-                    <div className="artistCard" key={artist.id}>
+                artists.map(list => (
+                    <div key={list.id}>
                         <a
-                            href={artist.linkToSpotify}
+                            href={list.linkToSpotify}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             <img
-                                src={artist.singleArtistImage}
+                                src={list.artistImageLink}
                                 height="100px"
                                 width="100px"
                             />
                         </a>
-                        <p>{artist.name}</p>
-                        <p>Popularity: {artist.popularity}</p>
-                        <p>Followers: {artist.followers_value}</p>
-                    </div>;
-                })}
+                        <GenreBubbles
+                            genres={list.genres}
+                            idOfRelArtist={list.id}
+                        />
+                        <p>{list.name}</p>
+                        <p>Popularity - {list.popularity}</p>
+                        <p>Followers - {list.followers_value}</p>
+                        <br />
+                    </div>
+                ))}
+            <CreatePlaylist
+                searchArtistName={props.searchArtistName}
+                searchArtistId={props.artistId}
+            />
         </div>
     );
 }

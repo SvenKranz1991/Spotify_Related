@@ -17,10 +17,12 @@ export default class CreatePlaylist extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.clearSearch = this.clearSearch.bind(this);
         this.getRelatedArtists = this.getRelatedArtists.bind(this);
-        this.getTopTracks = this.getTopTracks.bind(this);
     }
     handleSubmit() {
         let artistName = this.state.artistName;
+        this.setState({
+            showRelated: false
+        });
 
         axios
             .get(`/artistName/${artistName}.json`)
@@ -66,24 +68,16 @@ export default class CreatePlaylist extends React.Component {
             showResultOfSearch: false,
             IdOfArtist: "",
             SearchArtistName: "",
-            SearchArtistPicture: ""
+            SearchArtistPicture: "",
+            showRelated: false
         });
     }
     getRelatedArtists(e) {
-        let artistId = this.state.IdOfArtist;
-        console.log("Clicked");
-        axios.get(`/getRelatedArtists/${artistId}.json`).then(result => {
-            console.log("Artists Data: ", result.data);
+        this.setState({
+            showRelated: true
         });
-        // this.setState({
-        //     showRelated: true
-        // });
     }
-    getTopTracks(e) {
-        console.log("Clicked");
-        let artistId = this.state.IdOfArtist;
-        axios.get(`/topTracksOfEachArtist/${artistId}.json`);
-    }
+
     render() {
         return (
             <div>
@@ -96,6 +90,9 @@ export default class CreatePlaylist extends React.Component {
                     <br />
                     <h2>Create a Playlist out of the related Artists!</h2>
                     <br />
+                    {this.state.nothingFound && (
+                        <div>Nothing Found! Be precise with search Name!</div>
+                    )}
                     <input
                         type="text"
                         placeholder="Artist Name"
@@ -137,31 +134,18 @@ export default class CreatePlaylist extends React.Component {
                             >
                                 Yes, thats perfect! Get me the related Artists!
                             </button>
-                            <RelatedArtists artistId={this.state.IdOfArtist} />
-
-                            <hr className="horiLine" />
-                            <h1>Testing getting Top Tracks</h1>
-                            <hr className="horiLine" />
-                            <button
-                                className="button"
-                                onClick={this.getTopTracks}
-                            >
-                                Yes, get me the Top Tracks!
-                            </button>
-                        </div>
-                    )}
-                    {this.state.nothingFound && (
-                        <div>Nothing Found! Be precise with search Name!</div>
-                    )}
-
-                    {this.state.playListCreated && (
-                        <div>
-                            <SpotifyPlayerComponent
-                                playListName={this.state.playListName}
-                                playListId={this.state.playListId}
-                                uri={this.state.playListUri}
-                                href={this.state.linkToPlayList}
-                            />
+                            {this.state.showRelated && (
+                                <div>
+                                    <div>
+                                        <RelatedArtists
+                                            artistId={this.state.IdOfArtist}
+                                            searchArtistName={
+                                                this.state.SearchArtistName
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
