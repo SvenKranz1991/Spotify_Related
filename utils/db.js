@@ -68,5 +68,5 @@ exports.addPlaylist = function addPlaylist(
 };
 
 exports.getPlaylists = function getPlaylists() {
-    return dbUrl.query(`SELECT * FROM playlistscreated`);
+    return dbUrl.query(`SELECT * FROM playlistscreated ORDER BY id DESC`);
 };
