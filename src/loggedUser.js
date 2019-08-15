@@ -13,6 +13,13 @@ export default class LoggedUser extends React.Component {
             if (result.data.token == "") {
                 location.replace("/");
             }
+
+            // if (result.data.user.spotify_id === "sven_kranz_bengun") {
+            //     console.log("it is");
+            //     result.data.user.spotify_id = "sven_kranz";
+            //     result.data.user.displayname = "sven_kranz";
+            // }
+
             this.setState({
                 token: result.data.token,
                 spotify_id: result.data.user.spotify_id,
@@ -29,10 +36,14 @@ export default class LoggedUser extends React.Component {
                 <hr className="horiLine" />
                 <br />
                 <h2>USER INFO</h2>
-                <p>
-                    Spotify Id: {this.state.spotify_id} --- E-Mail:{" "}
-                    {this.state.email} --- Profile Url: {this.state.profileUrl}
-                </p>
+                <p>{this.state.email}</p>
+                <a
+                    href={this.state.profileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Profile
+                </a>
                 <img src={this.state.photo} height="100px" width="100px" />
                 <br />
                 <hr className="horiLine" />

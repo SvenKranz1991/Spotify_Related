@@ -528,7 +528,7 @@ app.get("/createPlaylist/:playListName.json/:artistId.json", function(
                             spotifyApi
                                 .createPlaylist(
                                     req.session.spotify_id,
-                                    `${artistName} | Related Artists created by Sven`,
+                                    `${artistName} | Related Artists`,
                                     {
                                         public: true
                                     }
@@ -546,7 +546,7 @@ app.get("/createPlaylist/:playListName.json/:artistId.json", function(
 
                                         let spotify_id = req.session.spotify_id;
                                         let mainArtist = artistName;
-                                        let playlistName = `${artistName} | Related Artists created by Sven`;
+                                        let playlistName = `${artistName} | Related Artists`;
                                         let artistPic = artistPicUrlForTable;
                                         let playListUrl = uri;
 
@@ -749,7 +749,7 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
                             spotifyApi
                                 .createPlaylist(
                                     req.session.spotify_id,
-                                    `${artistName} | Related Artists created by Sven`,
+                                    `${artistName} | Related Artists`,
                                     {
                                         public: true
                                     }
@@ -767,7 +767,7 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
 
                                         let spotify_id = req.session.spotify_id;
                                         let mainArtist = artistName;
-                                        let playlistName = `${artistName} | Related Artists created by Sven`;
+                                        let playlistName = `${artistName} | Related Artists`;
                                         let artistPic = artistPicUrlForTable;
                                         let playListUrl = uri;
 
