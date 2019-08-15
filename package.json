@@ -51,6 +51,7 @@
         "react-router-dom": "^5.0.1",
         "react-spotify-player": "^1.0.4",
         "react-test-renderer": "^16.6.0",
+        "react-transition-group": "^4.2.2",
         "reaviz": "^2.6.0",
         "redux": "^3.7.1",
         "redux-devtools-extension": "^2.13.2",

@@ -55,29 +55,32 @@ export default function ShowTopArtists() {
     );
 
     return (
-        <div className="playlistsWrapper">
-            <h3>Your Top Artists</h3>
+        <div className="topArtistWrapper">
+            <h3 className="topArtistTitle">Your Top Artists</h3>
+            <div className="topArtistInline">
+                {myList &&
+                    myList.map(list => (
+                        <div key={list.id} className="topArtistCard">
+                            <a
+                                href={list.linkToSpotify}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={list.artistImageLink}
+                                    height="100px"
+                                    width="100px"
+                                />
+                            </a>
 
-            {myList &&
-                myList.map(list => (
-                    <div key={list.id}>
-                        <a
-                            href={list.linkToSpotify}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img
-                                src={list.artistImageLink}
-                                height="100px"
-                                width="100px"
-                            />
-                        </a>
-                        <p>{list.name}</p>
-                        <p>Popularity - {list.popularity}</p>
-                        <p>Followers - {list.followers_value}</p>
-                        <br />
-                    </div>
-                ))}
+                            <p className="bolder">{list.name}</p>
+                            <br />
+                            <p>Popularity: {list.popularity}</p>
+                            <p>Followers: {list.followers_value}</p>
+                            <br />
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }

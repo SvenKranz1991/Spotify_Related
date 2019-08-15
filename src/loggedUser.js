@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "./axios";
-import ShowTopArtists from "./showTopArtists";
 
 export default class LoggedUser extends React.Component {
     constructor(props) {
@@ -33,21 +32,19 @@ export default class LoggedUser extends React.Component {
     render() {
         return (
             <div className="userProfile">
-                <hr className="horiLine" />
-                <br />
-                <h2>USER INFO</h2>
                 <p>{this.state.email}</p>
                 <a
                     href={this.state.profileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Profile
+                    <img
+                        src={this.state.photo}
+                        className="profilePic"
+                        height="100px"
+                        width="100px"
+                    />
                 </a>
-                <img src={this.state.photo} height="100px" width="100px" />
-                <br />
-                <hr className="horiLine" />
-                <ShowTopArtists />
             </div>
         );
     }

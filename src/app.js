@@ -6,6 +6,8 @@ import CompGeneratePlaylist from "./compGeneratePlaylist";
 import LoggedUser from "./loggedUser";
 import SearchingSingleTrackFeature from "./searchingSingleTrackFeature";
 
+import Landing from "./landing";
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -18,18 +20,22 @@ export default class App extends React.Component {
         return (
             <div>
                 <BrowserRouter>
-                    <header>
-                        <Link to="/app">Home</Link>
-                        <Link to="/app/playlists">Playlists</Link>
-                        <Link to="/app/justCreatePlaylist">
-                            Create Playlist - Single
-                        </Link>
-                        <Link to="/app/compCreatePlaylist">
-                            CreatePlaylist - Comp
-                        </Link>
-                        <Link to="/app/searchingSingleTrackFeature">
-                            Searching for Single Track
-                        </Link>
+                    <header className="navigation">
+                        <p className="logoinnav">spotify related</p>
+                        <div className="navigation-links">
+                            <Link to="/app">Home</Link>
+                            <Link to="/app/playlists">Playlists</Link>
+                            <Link to="/app/justCreatePlaylist">
+                                Create Playlist - Single
+                            </Link>
+                            <Link to="/app/compCreatePlaylist">
+                                CreatePlaylist - Comp
+                            </Link>
+                            <Link to="/app/searchingSingleTrackFeature">
+                                Searching for Single Track
+                            </Link>
+                        </div>
+                        <LoggedUser />
                     </header>
 
                     <div className="mainbody">
@@ -37,7 +43,7 @@ export default class App extends React.Component {
                             exact
                             path="/app"
                             render={() => {
-                                return <LoggedUser />;
+                                return <Landing />;
                             }}
                         />
                         <Route
