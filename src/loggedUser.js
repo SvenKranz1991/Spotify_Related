@@ -9,7 +9,7 @@ export default class LoggedUser extends React.Component {
     }
     componentDidMount() {
         axios.get("/access").then(result => {
-            console.log("LogmyAccesstoken: ", result.data.token);
+            // console.log("LogmyAccesstoken: ", result.data.token);
             if (result.data.token == "") {
                 location.replace("/");
             }
