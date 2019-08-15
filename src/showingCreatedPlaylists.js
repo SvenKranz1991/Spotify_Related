@@ -20,27 +20,32 @@ export default function ShowingCreatedPlaylists() {
 
     return (
         <div className="playlistsWrapper">
-            <h3>Playlists created with this Webpage</h3>
+            <h3 className="playlistTitle">
+                Playlists created with this Webpage
+            </h3>
+            <div className="playlistsInline">
+                {myList &&
+                    myList.map(list => (
+                        <div key={list.id} className="playlistCard">
+                            <a
+                                href={list.playlisturl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={list.artistpic}
+                                    height="100px"
+                                    width="100px"
+                                />
+                            </a>
 
-            {myList &&
-                myList.map(list => (
-                    <div key={list.id}>
-                        <a
-                            href={list.playlisturl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img
-                                src={list.artistpic}
-                                height="100px"
-                                width="100px"
-                            />
-                        </a>
-                        <p>{list.mainartist}</p>
-                        <p>Created by: {list.spotify_id}</p>
-                        <br />
-                    </div>
-                ))}
+                            <p className="evenbolder">{list.mainartist}</p>
+                            <br />
+                            <p>Created by: {list.spotify_id}</p>
+                            <br />
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }

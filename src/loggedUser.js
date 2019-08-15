@@ -32,20 +32,22 @@ export default class LoggedUser extends React.Component {
     render() {
         return (
             <div className="userProfile">
-                <p>{this.state.email}</p>
-                <a
-                    href={this.state.profileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img
-                        src={this.state.photo}
-                        className="profilePic"
-                        height="100px"
-                        width="100px"
-                    />
-                </a>
+                <p>Logged E-Mail: {this.state.email}</p>
             </div>
         );
     }
 }
+
+// <a
+//     href={this.state.profileUrl}
+//     target="_blank"
+//     rel="noopener noreferrer"
+// >
+// </a>
+
+// <img
+//     src={this.state.photo}
+//     className="profilePic"
+//     height="100px"
+//     width="100px"
+// />

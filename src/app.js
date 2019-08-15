@@ -24,7 +24,7 @@ export default class App extends React.Component {
                         <p className="logoinnav">spotify related</p>
                         <div className="navigation-links">
                             <Link to="/app">Home</Link>
-                            <Link to="/app/playlists">Playlists</Link>
+
                             <Link to="/app/justCreatePlaylist">
                                 Create Playlist - Single
                             </Link>
@@ -49,12 +49,6 @@ export default class App extends React.Component {
                         <Route
                             path="/app/compCreatePlaylist"
                             component={CompGeneratePlaylist}
-                        />
-
-                        <Route
-                            exact
-                            path="/app/playlists"
-                            component={ShowingCreatedPlaylists}
                         />
                         <Route
                             path="/app/justCreatePlaylist"

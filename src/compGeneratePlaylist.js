@@ -78,31 +78,37 @@ export default class CreatePlaylist extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="compGenratePlaylistWrapper">
                 <div>
-                    <h1>Spotify Playlist Generator</h1>
-
-                    <br />
-
-                    <hr className="horiLine" />
-                    <br />
-                    <h2>Create a Playlist out of the related Artists!</h2>
-                    <br />
-                    {this.state.nothingFound && (
-                        <div>Nothing Found! Be precise with search Name!</div>
-                    )}
-                    <input
-                        type="text"
-                        placeholder="Artist Name"
-                        name="artistName"
-                        className="textInput"
-                        onChange={this.handleChange}
-                    />
-                    <br />
-                    <button className="button" onClick={this.handleSubmit}>
-                        Search Artist
-                    </button>
-                    <br />
+                    <div className="searchWrapper">
+                        <div className="searchField">
+                            <h2 className="textBlock">
+                                Cool... so lets start with an Artist Name!
+                            </h2>
+                            <br />
+                            {this.state.nothingFound && (
+                                <div>
+                                    Nothing Found! Be precise with search Name!
+                                </div>
+                            )}
+                            <br />
+                            <input
+                                type="text"
+                                placeholder="Artist Name"
+                                name="artistName"
+                                className="textInput"
+                                onChange={this.handleChange}
+                            />
+                            <br />
+                            <p
+                                className="searchButton"
+                                onClick={this.handleSubmit}
+                            >
+                                Search Artist
+                            </p>
+                            <br />
+                        </div>
+                    </div>
                     <hr className="horiLine" />
                     {this.state.showResultOfSearch && (
                         <div>
