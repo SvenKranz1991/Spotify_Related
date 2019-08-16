@@ -83,12 +83,13 @@ export default class CreatePlaylist extends React.Component {
                     <div className="searchWrapper">
                         <div className="searchField">
                             <h2 className="textBlock">
-                                Cool... so lets start with an Artist Name!
+                                Cool... so lets start with an Artist Name
                             </h2>
                             <br />
                             {this.state.nothingFound && (
                                 <div className="white">
-                                    Nothing Found! Be precise with search Name!
+                                    Nothing Found. Name must be exactly like it
+                                    is displayed at Spotify.
                                 </div>
                             )}
                             <br />
@@ -113,7 +114,7 @@ export default class CreatePlaylist extends React.Component {
                     {this.state.showResultOfSearch && (
                         <div>
                             <div className="resultOfSearchArtist">
-                                <h1>Result of Search Artist!</h1>
+                                <h1>Result of Search Artist</h1>
                                 <h2>
                                     Artist Name: {this.state.SearchArtistName}
                                 </h2>

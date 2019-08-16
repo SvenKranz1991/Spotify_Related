@@ -638,6 +638,7 @@ h1 {
     cursor: pointer;
     opacity: 0.8;
     transition: 0.3s;
+    outline: none;
 }
 
 .searchButton:hover {
@@ -709,4 +710,25 @@ h1 {
     text-decoration: none;
     border-radius: 20px;
     outline: none;
+}
+
+.audioLinkToTrack {
+    margin-top: 20px;
+    background-color: #111111;
+    border-radius: 1px solid #111111;
+    color: #ffffff;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+    border-radius: 20px;
+    outline: none;
+}
+
+.className {
+    padding-top: 400px;
+    background-color: #ffffff;
+}
+
+.paddingtop {
+    maring-top: 20px;
 }

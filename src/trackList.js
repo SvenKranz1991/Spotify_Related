@@ -31,7 +31,6 @@ export default class TrackList extends React.Component {
     render() {
         return (
             <div>
-                <p>My Track List</p>
                 <TrackRows
                     artistIds={this.props.artistIdFormat}
                     tracks={this.props.trackList}

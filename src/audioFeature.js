@@ -106,6 +106,7 @@ export default class AudioFeature extends React.Component {
                     href={this.state.uri}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="audioLinkToTrack"
                 >
                     Link to Track
                 </a>

@@ -13,11 +13,12 @@ export default class LoggedUser extends React.Component {
                 location.replace("/");
             }
 
-            // if (result.data.user.spotify_id === "sven_kranz_bengun") {
-            //     console.log("it is");
-            //     result.data.user.spotify_id = "sven_kranz";
-            //     result.data.user.displayname = "sven_kranz";
-            // }
+            if (result.data.user.email == "") {
+                console.log("it is");
+                result.data.user.email = "Please Reload Page and get Access";
+                result.data.user.displayname =
+                    "Please Reload Page and get Access";
+            }
 
             this.setState({
                 token: result.data.token,

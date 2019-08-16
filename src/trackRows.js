@@ -41,58 +41,71 @@ export default class TrackRows extends React.Component {
     getAudioFeature(e) {
         console.log("My Target: ", e.target.value);
         let trackId = e.target.value;
-        this.setState({
-            showAudioFeature: trackId
-        });
-        axios.get(`/audioFeature/${trackId}.json`).then(result => {
-            console.log("My AudioFeature Result: ", result);
+        if (e.target.value == this.state.showAudioFeature) {
             this.setState({
-                trackId
+                showAudioFeature: false
             });
-        });
+        } else {
+            this.setState({
+                showAudioFeature: trackId
+            });
+            axios.get(`/audioFeature/${trackId}.json`).then(result => {
+                console.log("My AudioFeature Result: ", result);
+                this.setState({
+                    trackId
+                });
+            });
+        }
     }
     render() {
         return (
-            <div className="trackListWrapper">
-                <h3 className="trackListTitle">Your Tracks</h3>
+            <div className="className">
+                <div className="trackListTitle">
+                    <h3>Your Tracklist</h3>
+                </div>
 
-                <div>
-                    {this.state.myList &&
-                        this.state.myList.map(list => (
-                            <div key={list.id} className="trackListLines">
-                                <a
-                                    href={list.linkToSpotify}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <img
-                                        src={list.trackImageLink}
-                                        height="100px"
-                                        width="100px"
-                                    />
-                                </a>
-                                <span>Artist: {list.interpret}</span>
-                                <span>Name of Track: {list.name}</span>
-                                <span>Popularity: {list.popularity}</span>
-                                <span>
+                <div className="trackListWrapper">
+                    <div className="trackListLines">
+                        {this.state.myList &&
+                            this.state.myList.map(list => (
+                                <div key={list.id}>
+                                    <a
+                                        href={list.linkToSpotify}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            src={list.trackImageLink}
+                                            height="100px"
+                                            width="100px"
+                                        />
+                                    </a>
+                                    <p>Artist: {list.interpret}</p>
+                                    <p>Name of Track: {list.name}</p>
+                                    <p>Popularity: {list.popularity}</p>
+
                                     <button
                                         value={list.id}
                                         onClick={this.getAudioFeature}
+                                        className="buttonShowAudioFeature"
                                     >
-                                        Show Audio Features from Spotify
+                                        Open - Close Audio Feature
                                     </button>
-                                </span>
-                                {this.state.showAudioFeature == list.id && (
-                                    <div>
-                                        <span>
-                                            <AudioFeature trackId={list.id} />
-                                        </span>
-                                    </div>
-                                )}
 
-                                <br />
-                            </div>
-                        ))}
+                                    {this.state.showAudioFeature == list.id && (
+                                        <div>
+                                            <span>
+                                                <AudioFeature
+                                                    trackId={list.id}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    <br />
+                                </div>
+                            ))}
+                    </div>
                 </div>
             </div>
         );

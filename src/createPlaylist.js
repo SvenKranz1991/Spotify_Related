@@ -77,7 +77,10 @@ export default class CreatePlaylist extends React.Component {
                             uri={this.state.playListUri}
                             href={this.state.linkToPlayList}
                         />
-                        <button onClick={this.showList}>
+                        <button
+                            onClick={this.showList}
+                            className="buttonShowAudioFeature"
+                        >
                             Show List and Features
                         </button>
                     </div>

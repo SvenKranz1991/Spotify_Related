@@ -35,6 +35,7 @@ export default class SpotifyPlayerComponent extends React.Component {
                     href={this.props.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="audioLinkToTrack paddingtop"
                 >
                     Link to the PlayList
                 </a>
@@ -43,6 +44,7 @@ export default class SpotifyPlayerComponent extends React.Component {
                     href={this.props.uri}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="audioLinkToTrack paddingtop"
                 >
                     Open in Spotify!
                 </a>
