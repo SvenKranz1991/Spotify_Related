@@ -53,42 +53,47 @@ export default class TrackRows extends React.Component {
     }
     render() {
         return (
-            <div className="playlistsWrapper">
-                <h3>Your Tracks</h3>
+            <div className="trackListWrapper">
+                <h3 className="trackListTitle">Your Tracks</h3>
 
-                {this.state.myList &&
-                    this.state.myList.map(list => (
-                        <div key={list.id}>
-                            <a
-                                href={list.linkToSpotify}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    src={list.trackImageLink}
-                                    height="100px"
-                                    width="100px"
-                                />
-                            </a>
-                            <p>Interpret -{list.interpret}</p>
-                            <p>TrackName - {list.name}</p>
-                            <p>Popularity - {list.popularity}</p>
+                <div>
+                    {this.state.myList &&
+                        this.state.myList.map(list => (
+                            <div key={list.id} className="trackListLines">
+                                <a
+                                    href={list.linkToSpotify}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <img
+                                        src={list.trackImageLink}
+                                        height="100px"
+                                        width="100px"
+                                    />
+                                </a>
+                                <span>Artist: {list.interpret}</span>
+                                <span>Name of Track: {list.name}</span>
+                                <span>Popularity: {list.popularity}</span>
+                                <span>
+                                    <button
+                                        value={list.id}
+                                        onClick={this.getAudioFeature}
+                                    >
+                                        Show Audio Features from Spotify
+                                    </button>
+                                </span>
+                                {this.state.showAudioFeature == list.id && (
+                                    <div>
+                                        <span>
+                                            <AudioFeature trackId={list.id} />
+                                        </span>
+                                    </div>
+                                )}
 
-                            <button
-                                value={list.id}
-                                onClick={this.getAudioFeature}
-                            >
-                                Show Audio Features from Spotify
-                            </button>
-                            {this.state.showAudioFeature == list.id && (
-                                <div>
-                                    <AudioFeature trackId={list.id} />
-                                </div>
-                            )}
-
-                            <br />
-                        </div>
-                    ))}
+                                <br />
+                            </div>
+                        ))}
+                </div>
             </div>
         );
     }

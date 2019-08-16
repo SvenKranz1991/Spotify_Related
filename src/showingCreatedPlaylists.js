@@ -21,7 +21,7 @@ export default function ShowingCreatedPlaylists() {
     return (
         <div className="playlistsWrapper">
             <h3 className="playlistTitle">
-                Playlists created with this Webpage
+                Users created Playlists for Artists like...
             </h3>
             <div className="playlistsInline">
                 {myList &&
@@ -40,12 +40,13 @@ export default function ShowingCreatedPlaylists() {
                             </a>
 
                             <p className="evenbolder">{list.mainartist}</p>
-                            <br />
-                            <p>Created by: {list.spotify_id}</p>
-                            <br />
                         </div>
                     ))}
             </div>
         </div>
     );
 }
+//
+// <br />
+// <p>Created by: {list.spotify_id}</p>
+// <br />

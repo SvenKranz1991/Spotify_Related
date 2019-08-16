@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, BrowserRouter, Link } from "react-router-dom";
-import ShowingCreatedPlaylists from "./showingCreatedPlaylists";
 import SingleGeneratePlaylist from "./singleGeneratePlaylist";
 import CompGeneratePlaylist from "./compGeneratePlaylist";
 import LoggedUser from "./loggedUser";
@@ -24,12 +23,11 @@ export default class App extends React.Component {
                         <p className="logoinnav">spotify related</p>
                         <div className="navigation-links">
                             <Link to="/app">Home</Link>
-
+                            <Link to="/app/compCreatePlaylist">
+                                Create Playlist - Comp
+                            </Link>
                             <Link to="/app/justCreatePlaylist">
                                 Create Playlist - Single
-                            </Link>
-                            <Link to="/app/compCreatePlaylist">
-                                CreatePlaylist - Comp
                             </Link>
                             <Link to="/app/searchingSingleTrackFeature">
                                 Searching for Single Track

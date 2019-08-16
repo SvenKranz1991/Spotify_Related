@@ -90,10 +90,6 @@ h1 {
 
 /* REGULAR CSS */
 
-.ArtistPicture {
-    border-radius: 50%;
-}
-
 .artistCard {
     width: 400px;
     height: 400px;
@@ -362,7 +358,10 @@ h1 {
 .compGeneratePlaylist {
     height: 100%;
     width: 100%;
+    margin: 0;
 }
+
+/* SearchField */
 
 .searchWrapper {
     background-color: #111111;
@@ -412,4 +411,302 @@ h1 {
 
 .searchButton:hover {
     opacity: 1;
+}
+
+/* ArtistSearch */
+
+.white {
+    color: white;
+}
+
+.compGeneratePlaylistWrapper {
+    background-color: #111111;
+    box-sizing: border-box;
+}
+
+.resultOfSearchArtist {
+    height: 500px;
+    background-color: #2ecc40;
+    width: 100%;
+    margin-bottom: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.ArtistPicture {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.buttonSearchWrapper {
+    padding-bottom: 20px;
+    width: 80%;
+    display: inline-block;
+    color: #ffffff;
+}
+
+.conButton {
+    width: 300px;
+    background-color: #111111;
+    margin-top: 20px;
+    color: #ffffff;
+    font-weight: lighter;
+    padding: 10px;
+    font-size: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: 0.1s;
+}
+
+.conButton:hover {
+    opacity: 1;
+    font-weight: bold;
+}
+
+/* RelatedArtists */
+
+.relatedArtistsWrapper {
+    height: 100%;
+    width: 100%;
+    background-color: #111111;
+}
+
+.relatedArtistsTitle {
+    color: #ffffff;
+    background-color: #2ecc40;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: italic;
+    /* transform: translate(-40%, 10%); */
+    box-shadow: 0px -14px 133px 155px rgba(46, 204, 64, 1);
+}
+
+.relatedArtistsInline {
+    margin-top: 50px;
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 30px;
+    align-items: start;
+}
+
+.relatedArtistsCard {
+    background-color: inherit;
+    height: 600px;
+    width: 200px;
+    margin: auto;
+    text-align: center;
+}
+
+.relatedArtistsCard img {
+    width: 100%;
+    height: 200px;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.relatedArtistsCard p {
+    color: #ffffff;
+    font-weight: lighter;
+}
+
+.evenbolder {
+    font-weight: bold;
+}
+
+.genreInline {
+    display: inline-block;
+    display: grid;
+    grid-auto-columns: repeat(3, autofill);
+}
+
+.genreBubble {
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+
+.genreBubble p {
+    color: #111111;
+    padding: 4px;
+    font-size: 10px;
+    font-weight: bolder;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.genreBubble a {
+    text-decoration: none;
+}
+
+/* Create PlaylistTitle */
+
+.createTitle {
+    background-color: #ffffff;
+    height: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px -200px 183px 108px rgba(255, 255, 255, 1);
+}
+
+.createTitle h2 {
+    color: #111111;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.createTitle p {
+    margin-top: 20px;
+    background-color: #ff851b;
+    color: black;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* createdPlaylist */
+
+.createdPlaylist {
+    height: 600px;
+    width: 60%;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.createdPlaylist p {
+    color: #111111;
+    font-weight: lighter;
+    background-color: #ffffff;
+}
+
+/* SearchTitle in Audio Feature */
+
+.searchTitle {
+    color: #ffffff;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.searchTitleWrapper {
+    background-color: #111111;
+    height: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchTitle input {
+    width: 250px;
+    height: 38px;
+}
+
+.searchTitle h1 {
+    font-size: 25px;
+}
+
+.searchButton {
+    width: 200px;
+    background-color: #ff851b;
+    margin-top: 20px;
+    color: black;
+    font-weight: lighter;
+    padding: 10px;
+    font-size: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.searchButton:hover {
+    opacity: 1;
+}
+
+/* Tracklist */
+
+.trackListWrapper {
+    color: black;
+    height: 100%;
+    width: 400px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.trackListTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #111111;
+    background-color: #ff851b;
+    height: 30px;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.trackListLines {
+    margin-top: 30px;
+    height: 200px;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    background-color: #ffffff;
+}
+
+.trackListLines > span {
+    padding: 8px 4px;
+}
+
+/* Audio Features */
+
+.audioFeatureWrapper {
+    color: black;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.smallFontSize {
+    font-weight: lighter;
+    font-size: 12px;
+}
+
+.buttonShowAudioFeature {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.buttonShowAudioFeature {
+    margin-top: 20px;
+    background-color: #ff851b;
+    color: black;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+    border-radius: 20px;
+    outline: none;
 }

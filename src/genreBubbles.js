@@ -27,20 +27,24 @@ export default function RelatedArtists(props) {
     // console.log("My props in Genres: ", genres);
 
     return (
-        <div className="relatedArtistsWrapper">
+        <div>
             <p>Genres:</p>
-            {genres &&
-                genres.map(bubble => (
-                    <div key={bubble.id}>
-                        <a
-                            href={"https://lmgtfy.com/?q=" + bubble.gen.genre}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <p>{bubble.gen.genre}</p>
-                        </a>
-                    </div>
-                ))}
+            <div className="genreInline">
+                {genres &&
+                    genres.map(bubble => (
+                        <div key={bubble.id} className="genreBubble">
+                            <a
+                                href={
+                                    "https://lmgtfy.com/?q=" + bubble.gen.genre
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <p>{bubble.gen.genre}</p>
+                            </a>
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }

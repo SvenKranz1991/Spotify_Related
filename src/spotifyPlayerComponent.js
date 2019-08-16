@@ -19,11 +19,12 @@ export default class SpotifyPlayerComponent extends React.Component {
     }
     render() {
         return (
-            <div>
-                <hr className="horiLine" />
-                <h2>-------------Playlist Created-----------------</h2>
+            <div className="createdPlaylist">
+                <h2>Your Playlist</h2>
                 <p>Name of Playlist: {this.props.playListName}</p>
                 <p>Id of Playlist: {this.props.playListId}</p>
+                <br />
+                <br />
                 <SpotifyPlayer
                     uri={this.props.uri}
                     size={size}
@@ -37,6 +38,7 @@ export default class SpotifyPlayerComponent extends React.Component {
                 >
                     Link to the PlayList
                 </a>
+                <br />
                 <a
                     href={this.props.uri}
                     target="_blank"
@@ -44,8 +46,6 @@ export default class SpotifyPlayerComponent extends React.Component {
                 >
                     Open in Spotify!
                 </a>
-
-                <hr className="horiLine" />
             </div>
         );
     }

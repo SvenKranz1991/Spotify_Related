@@ -87,7 +87,7 @@ export default class CreatePlaylist extends React.Component {
                             </h2>
                             <br />
                             {this.state.nothingFound && (
-                                <div>
+                                <div className="white">
                                     Nothing Found! Be precise with search Name!
                                 </div>
                             )}
@@ -112,32 +112,41 @@ export default class CreatePlaylist extends React.Component {
                     <hr className="horiLine" />
                     {this.state.showResultOfSearch && (
                         <div>
-                            <h1>Result of Search Artist!</h1>
-                            <h2>Artist Name: {this.state.SearchArtistName}</h2>
-                            <h3>Artist Id: {this.state.IdOfArtist}</h3>
-                            <a
-                                href={this.state.SearchArtistUrl}
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    src={this.state.SearchArtistPicture}
-                                    width="300px"
-                                    height="300px"
-                                    className="ArtistPicture"
-                                />
-                            </a>
-                            <button
-                                className="button"
-                                onClick={this.clearSearch}
-                            >
-                                If its not you can clear!
-                            </button>
-                            <button
-                                className="button"
-                                onClick={this.getRelatedArtists}
-                            >
-                                Yes, thats perfect! Get me the related Artists!
-                            </button>
+                            <div className="resultOfSearchArtist">
+                                <h1>Result of Search Artist!</h1>
+                                <h2>
+                                    Artist Name: {this.state.SearchArtistName}
+                                </h2>
+
+                                <a
+                                    href={this.state.SearchArtistUrl}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    <img
+                                        src={this.state.SearchArtistPicture}
+                                        className="ArtistPicture"
+                                    />
+                                </a>
+                                <p>Artist Id:</p>
+                                <p>{this.state.IdOfArtist}</p>
+                                <div className="buttonSearchWrapper">
+                                    <p
+                                        className="conButton"
+                                        onClick={this.clearSearch}
+                                    >
+                                        Clear Search
+                                    </p>
+                                    <p
+                                        className="conButton"
+                                        onClick={this.getRelatedArtists}
+                                    >
+                                        Yes, thats perfect! Get me the related
+                                        Artists!
+                                    </p>
+                                </div>
+                            </div>
+
                             {this.state.showRelated && (
                                 <div>
                                     <div>

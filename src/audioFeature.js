@@ -99,8 +99,9 @@ export default class AudioFeature extends React.Component {
 
     render() {
         return (
-            <div className="playlistsWrapper">
+            <div className="audioFeatureWrapper">
                 <h3>Audio Feature</h3>
+                <br />
                 <a
                     href={this.state.uri}
                     target="_blank"
@@ -108,12 +109,16 @@ export default class AudioFeature extends React.Component {
                 >
                     Link to Track
                 </a>
+
                 <div>
+                    <br />
                     <p>
-                        Key - {this.state.key} {this.state.mode}
+                        Key: {this.state.key} {this.state.mode}
                     </p>
-                    <p>Beats per Minute - {this.state.tempo}</p>
+                    <p>Beats per Minute: {this.state.tempo}</p>
+                    <p>RMS: {this.state.loudness} db</p>
                 </div>
+                <br />
                 <BarChartFeature
                     acousticness={this.state.acousticness}
                     danceability={this.state.danceability}

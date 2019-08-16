@@ -17,8 +17,12 @@ export default function BarChartFeature(props) {
 
     return (
         <div clssName="Chart">
-            <h1>BarChart</h1>
-            <VictoryChart domainPadding={30} theme={VictoryTheme.material}>
+            <h3>Analysis by Spotify</h3>
+            <VictoryChart
+                domainPadding={10}
+                theme={VictoryTheme.material}
+                style={{ parent: { maxWidth: "40%" } }}
+            >
                 <VictoryAxis
                     tickValues={[1, 2, 3, 4, 5, 6, 7]}
                     tickFormat={["1", "2", "3", "4", "5", "6", "7"]}
@@ -34,9 +38,9 @@ export default function BarChartFeature(props) {
                     y="value"
                 />
             </VictoryChart>
-            <p>
+            <p className="smallFontSize">
                 1 = Acousticness, 2 = Danceability, 3 = Energy, 4 =
-                Instrumentalness, 5 = Liveness, 6 = Speechiness, 7 = Positivity
+                Instrumentalness, 5 = Liveness, 6 = Speechiness, 7 = Happiness
             </p>
         </div>
     );

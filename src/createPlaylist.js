@@ -62,31 +62,21 @@ export default class CreatePlaylist extends React.Component {
         return (
             <div>
                 {!this.state.playListCreated && (
-                    <div>
-                        <hr className="horiLine" />
+                    <div className="createTitle">
                         <h2>Create A Playlist?</h2>
 
-                        <br />
-                        <button className="button" onClick={this.handleSubmit}>
-                            Create Playlist
-                        </button>
+                        <p onClick={this.handleSubmit}>Create Playlist</p>
                     </div>
                 )}
 
                 {this.state.playListCreated && (
-                    <div>
-                        <h1>Your Playlist: </h1>
+                    <div className="createTitle">
                         <SpotifyPlayerComponent
                             playListName={this.state.playListName}
                             playListId={this.state.playListId}
                             uri={this.state.playListUri}
                             href={this.state.linkToPlayList}
                         />
-                    </div>
-                )}
-
-                {this.state.playListCreated && (
-                    <div>
                         <button onClick={this.showList}>
                             Show List and Features
                         </button>

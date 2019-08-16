@@ -32,38 +32,38 @@ export default function RelatedArtists(props) {
     return (
         <div className="relatedArtistsWrapper">
             <div>
-                <h3>Related Artists of {props.searchArtistName}!</h3>
-                <br />
-                <hr className="horiLine" />
-                <br />
+                <h3 className="relatedArtistsTitle">
+                    Related Artists to {props.searchArtistName}!
+                </h3>
+            </div>
+            <div className="relatedArtistsInline">
+                {artists &&
+                    artists.map(list => (
+                        <div key={list.id} className="relatedArtistsCard">
+                            <p>{list.name}</p>
+                            <a
+                                href={list.linkToSpotify}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={list.artistImageLink}
+                                    height="100px"
+                                    width="100px"
+                                />
+                            </a>
+
+                            <p>Popularity - {list.popularity}</p>
+                            <p>Followers - {list.followers_value}</p>
+                            <br />
+                            <GenreBubbles
+                                genres={list.genres}
+                                idOfRelArtist={list.id}
+                            />
+                        </div>
+                    ))}
             </div>
 
-            <hr className="horiLine" />
-
-            {artists &&
-                artists.map(list => (
-                    <div key={list.id}>
-                        <a
-                            href={list.linkToSpotify}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img
-                                src={list.artistImageLink}
-                                height="100px"
-                                width="100px"
-                            />
-                        </a>
-                        <GenreBubbles
-                            genres={list.genres}
-                            idOfRelArtist={list.id}
-                        />
-                        <p>{list.name}</p>
-                        <p>Popularity - {list.popularity}</p>
-                        <p>Followers - {list.followers_value}</p>
-                        <br />
-                    </div>
-                ))}
             <CreatePlaylist
                 searchArtistName={props.searchArtistName}
                 searchArtistId={props.artistId}
