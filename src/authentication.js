@@ -10,7 +10,7 @@ export default function Authentication() {
     }, []);
     return (
         <div className="Loggout">
-            <h1>Something went wrong!</h1>
+            <h1>Something went wrong! Login again...</h1>
         </div>
     );
 }

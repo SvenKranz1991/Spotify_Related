@@ -24,13 +24,13 @@ export default class App extends React.Component {
                         <div className="navigation-links">
                             <Link to="/app">Home</Link>
                             <Link to="/app/compCreatePlaylist">
-                                Create Playlist - Comp
-                            </Link>
-                            <Link to="/app/justCreatePlaylist">
-                                Create Playlist - Single
+                                Create Playlist
                             </Link>
                             <Link to="/app/searchingSingleTrackFeature">
                                 Data for Single Track
+                            </Link>
+                            <Link to="/app/justCreatePlaylist">
+                                Create Playlist - Single
                             </Link>
                         </div>
                         <LoggedUser />
