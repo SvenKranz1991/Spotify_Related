@@ -63,7 +63,7 @@ export default class CreatePlaylist extends React.Component {
             <div>
                 {!this.state.playListCreated && (
                     <div className="createTitle">
-                        <h2>Create A Playlist?</h2>
+                        <h2>Create Playlist?</h2>
 
                         <p onClick={this.handleSubmit}>Create Playlist</p>
                     </div>
@@ -81,7 +81,7 @@ export default class CreatePlaylist extends React.Component {
                             onClick={this.showList}
                             className="buttonShowAudioFeature"
                         >
-                            Show List and Features
+                            Show Tracklist and Audio Features of each Track
                         </button>
                     </div>
                 )}

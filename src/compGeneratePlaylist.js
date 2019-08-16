@@ -131,6 +131,7 @@ export default class CreatePlaylist extends React.Component {
                                 </a>
                                 <p>Artist Id:</p>
                                 <p>{this.state.IdOfArtist}</p>
+
                                 <div className="buttonSearchWrapper">
                                     <p
                                         className="conButton"
