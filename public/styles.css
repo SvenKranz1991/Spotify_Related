@@ -369,8 +369,7 @@ h1 {
 /* SearchField */
 
 .searchWrapper {
-    background-color: #111111;
-    background-image: url(/images/cassette-wallpapers-30293-8786331.jpg);
+    background-color: #ff851b;
     height: 400px;
     width: 100%;
     display: flex;
@@ -386,7 +385,7 @@ h1 {
 }
 
 .textBlock {
-    color: #ffffff;
+    color: #111111;
     padding: 30px;
     font-size: 30px;
     font-weight: bolder;
@@ -400,9 +399,9 @@ h1 {
 
 .searchButton {
     width: 200px;
-    background-color: #ff851b;
+    background-color: #111111;
     margin-top: 20px;
-    color: black;
+    color: #ffffff;
     font-weight: lighter;
     padding: 10px;
     font-size: 14px;
@@ -417,6 +416,7 @@ h1 {
 
 .searchButton:hover {
     opacity: 1;
+    font-weight: bold;
 }
 
 /* ArtistSearch */
@@ -604,7 +604,7 @@ h1 {
 /* SearchTitle in Audio Feature */
 
 .searchTitle {
-    color: #ffffff;
+    color: #111111;
     padding: 30px;
     font-size: 30px;
     font-weight: bolder;
@@ -612,8 +612,7 @@ h1 {
 }
 
 .searchTitleWrapper {
-    background-color: #111111;
-    background-image: url(/images/cassette-wallpapers-30293-8786331.jpg);
+    background-color: #ff851b;
     height: 400px;
     width: 100%;
     display: flex;

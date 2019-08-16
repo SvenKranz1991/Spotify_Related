@@ -82,9 +82,7 @@ export default class CreatePlaylist extends React.Component {
                 <div>
                     <div className="searchWrapper">
                         <div className="searchField">
-                            <h2 className="textBlock">
-                                Cool... so lets start with an Artist Name
-                            </h2>
+                            <h2 className="textBlock">Input Artist Name</h2>
                             <br />
                             {this.state.nothingFound && (
                                 <div className="white">
