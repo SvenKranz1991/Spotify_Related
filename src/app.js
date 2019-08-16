@@ -30,7 +30,7 @@ export default class App extends React.Component {
                                 Create Playlist - Single
                             </Link>
                             <Link to="/app/searchingSingleTrackFeature">
-                                Searching for Single Track
+                                Data for Single Track
                             </Link>
                         </div>
                         <LoggedUser />
@@ -62,7 +62,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-// {this.state.showRelated && (
-//     <RelatedArtists artistId={this.state.IdOfArtist} />
-// )}

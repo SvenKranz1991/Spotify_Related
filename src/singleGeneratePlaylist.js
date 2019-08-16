@@ -98,7 +98,10 @@ export default class SingleGeneratePlaylist extends React.Component {
                 )}
                 {this.state.playListCreated && (
                     <div>
-                        <button onClick={this.showList}>
+                        <button
+                            onClick={this.showList}
+                            className="buttonShowAudioFeature"
+                        >
                             Show List and Features
                         </button>
                     </div>
