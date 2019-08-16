@@ -32,7 +32,7 @@ export default function BarChartFeature(props) {
                     fixLabelOverlap={true}
                     data={data}
                     alignment="middle"
-                    style={{ data: { fill: "#ff851b" } }}
+                    style={{ data: { fill: "#f012be" } }}
                     // data accessor for x values
                     x="quarter"
                     // data accessor for y values

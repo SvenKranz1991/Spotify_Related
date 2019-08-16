@@ -16,7 +16,7 @@ export default class Landing extends React.Component {
             <div>
                 <div className="landingpage">
                     <div className="callToAction">
-                        <h1>Create a playlist from related Artists</h1>
+                        <h1>Create a playlist out of similar Artists</h1>
                         <Link to="/app/compCreatePlaylist">
                             Create Playlist
                         </Link>

@@ -30,7 +30,7 @@ export default class App extends React.Component {
                                 Data for Single Track
                             </Link>
                             <Link to="/app/justCreatePlaylist">
-                                Create Playlist - Single
+                                Create Playlist - Demo
                             </Link>
                         </div>
                         <LoggedUser />
