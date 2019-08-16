@@ -108,16 +108,18 @@ h1 {
 .navigation {
     height: 50px;
     width: 100%;
-    background-color: #dddddd;
-    border-bottom: 1px solid #cccccc;
+    background-color: #111111;
+    border-bottom: 1px solid #111111;
+    color: #ffffff;
     display: flex;
     align-self: center;
     align-items: center;
 }
 
 .navigation-links a {
-    background-color: #dddddd;
-    color: black;
+    background-color: #111111;
+    color: #ffffff;
+    font-weight: bolder;
     text-decoration: none;
     font-weight: lighter;
     letter-spacing: -1px;
@@ -125,6 +127,7 @@ h1 {
 
 .userProfile p {
     font-size: 15px;
+    color: #ffffff;
 }
 
 .navigation-links a:hover {
@@ -137,7 +140,8 @@ h1 {
     justify-content: space-between;
     margin-left: 50px;
     margin-right: 20px;
-    background-color: #dddddd;
+    color: #ffffff;
+    background-color: #111111;
 }
 
 .logoinnav {
@@ -145,7 +149,8 @@ h1 {
     width: 50px;
     float: left;
     font-weight: bold;
-    background-color: #dddddd;
+    background-color: #111111;
+    color: #ffffff;
     transform: translateX(-40%);
 }
 

@@ -72,7 +72,7 @@ export default class SingleGeneratePlaylist extends React.Component {
             <div>
                 <hr className="horiLine" />
                 <br />
-                <h2>Creating Playlist out of Artist! Single Click</h2>
+                <h2>Input Artist Name</h2>
                 <br />
                 <input
                     type="text"
