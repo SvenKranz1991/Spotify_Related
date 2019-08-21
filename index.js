@@ -1028,7 +1028,7 @@ function getIdOfTracksForPlaylist(artistName) {
     return new Promise((resolve, reject) => {
         spotifyApi.getArtistTopTracks(artistName, "from_token").then(
             function(data) {
-                // console.log("DATA: ", data.body.tracks);
+                console.log("DATA: ", data);
                 const slicedTracksArray = data.body.tracks.slice(0, 3);
 
                 const mappedTracksId = slicedTracksArray.map(eachTrack => {
@@ -1040,7 +1040,7 @@ function getIdOfTracksForPlaylist(artistName) {
                     return eachTrack["uri"];
                 });
 
-                // console.log(trackIdsFormat);
+                console.log(trackIdsFormat);
                 resolve(trackIdsFormat);
             },
             function(err) {
