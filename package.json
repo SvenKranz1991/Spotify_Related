@@ -50,6 +50,7 @@
         "react-router": "^5.0.1",
         "react-router-dom": "^5.0.1",
         "react-spotify-player": "^1.0.4",
+        "react-spring": "^8.0.27",
         "react-test-renderer": "^16.6.0",
         "react-transition-group": "^4.2.2",
         "reaviz": "^2.6.0",

@@ -848,8 +848,16 @@ app.get("/createPlaylistOutOfName/:artistName.json", function(req, res) {
 
 app.get("/app/getPlaylists", function(req, res) {
     db.getPlaylists().then(playlists => {
-        // console.log("My Playlists: ", playlists.rows);
+        console.log("My Playlists: ", playlists.rows);
         res.json(playlists.rows);
+    });
+});
+
+app.get("/app/getMorePlaylists/:lastId.json", function(req, res) {
+    let lastId = req.params.lastId;
+    db.getMorePlaylists(lastId).then(addPlaylists => {
+        console.log("My New Playlists: ", addPlaylists.rows);
+        res.json(addPlaylists.rows);
     });
 });
 
