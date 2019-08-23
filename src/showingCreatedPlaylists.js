@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
 // import { useTrail, animated as a } from "react-spring";
-
+//
 // const config = { mass: 5, tension: 2000, friction: 200 };
 
 export default function ShowingCreatedPlaylists() {
@@ -56,8 +56,10 @@ export default function ShowingCreatedPlaylists() {
 
     // const trail = useTrail(myList.length, {
     //     config,
-    //     opacity: toggle ? 1 : 0,
-    //     transform: toggle ? "translate3d(0px,0,0)" : "translate3d(-10px,0,0)",
+    //     opacity: toggleList ? 1 : 0,
+    //     transform: toggleList
+    //         ? "translate3d(0px,0,0)"
+    //         : "translate3d(-10px,0,0)",
     //     from: { opacity: 0, transform: "translate3d(-10px,0,0)" }
     // });
 
@@ -89,15 +91,12 @@ export default function ShowingCreatedPlaylists() {
             </div>
             {showButton && (
                 <div>
-                    <button onClick={() => setToggleList(toggleList + 1)}>
-                        getMorePlaylists
-                    </button>
-                </div>
-            )}
-
-            {!showButton && (
-                <div>
-                    <h1>No more Playlists</h1>
+                    <h1
+                        onClick={() => setToggleList(toggleList + 1)}
+                        className="getMorePlaylists-btn"
+                    >
+                        V
+                    </h1>
                 </div>
             )}
         </div>
