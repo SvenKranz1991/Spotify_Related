@@ -77,7 +77,10 @@ const spotifyApi = new SpotifyWebApi({
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////////////////////////
 
-const { Client_ID, Client_Secret } = require("./secrets");
+// const { Client_ID, Client_Secret } = require("./secrets");
+
+const Client_ID = process.env.Client_ID;
+const Client_Secret = process.env.Client_Secret;
 
 ////////////////////// MY ACCESS TOKEN ////////////////////////////////////
 
