@@ -68,6 +68,10 @@ passport.deserializeUser(function(obj, done) {
 
 const SpotifyWebApi = require("spotify-web-api-node");
 
+// change callbackURL
+// https://spotifyrelated.herokuapp.com/callback
+// http://localhost:8080/callback
+
 // credentials are optional
 const spotifyApi = new SpotifyWebApi({
     clientId: "fcecfc72172e4cd267473117a17cbd4d",
