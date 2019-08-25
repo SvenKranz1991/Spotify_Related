@@ -2,9 +2,7 @@ var spicedPg = require("spiced-pg");
 
 var dbUrl;
 if (process.env.DATABASE_URL) {
-    dbUrl =
-        process.env.DATABASE_URL ||
-        "postgres://spicedling:password@localhost:5432/spotify";
+    dbUrl = spicedPg(process.env.DATABASE_URL);
 } else {
     dbUrl = spicedPg("postgres:postgres:postgres@localhost:5432/spotify");
 }
