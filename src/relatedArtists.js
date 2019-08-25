@@ -40,7 +40,6 @@ export default function RelatedArtists(props) {
                 {artists &&
                     artists.map(list => (
                         <div key={list.id} className="relatedArtistsCard">
-                            <p>{list.name}</p>
                             <a
                                 href={list.linkToSpotify}
                                 target="_blank"
@@ -52,9 +51,13 @@ export default function RelatedArtists(props) {
                                     width="100px"
                                 />
                             </a>
-
-                            <p>Popularity - {list.popularity}</p>
-                            <p>Followers - {list.followers_value}</p>
+                            <h4 className="evenbolder">{list.name}</h4>
+                            <h6 className="evenSmaller">
+                                Popularity - {list.popularity}
+                            </h6>
+                            <h6 className="evenSmaller">
+                                Followers - {list.followers_value}
+                            </h6>
                             <br />
                             <GenreBubbles
                                 genres={list.genres}

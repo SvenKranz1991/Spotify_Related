@@ -33,7 +33,7 @@ export default class LoggedUser extends React.Component {
     render() {
         return (
             <div className="userProfile">
-                <p>Logged E-Mail: {this.state.email}</p>
+                <p>{this.state.email}</p>
             </div>
         );
     }

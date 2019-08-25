@@ -90,10 +90,13 @@ export default function ShowTopArtists() {
                                 />
                             </a>
 
-                            <p className="bolder">{myList[index].name}</p>
-                            <br />
-                            <p>Popularity: {myList[index].popularity}</p>
-                            <p>Followers: {myList[index].followers_value}</p>
+                            <h4 className="evenbolder">{myList[index].name}</h4>
+                            <h6 className="evenSmaller">
+                                Popularity: {myList[index].popularity}
+                            </h6>
+                            <h6 className="evenSmaller">
+                                Followers: {myList[index].followers_value}
+                            </h6>
                             <br />
                         </a.div>
                     );

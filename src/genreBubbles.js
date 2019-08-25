@@ -28,7 +28,7 @@ export default function RelatedArtists(props) {
 
     return (
         <div>
-            <p>Genres:</p>
+            <h6 className="evenSmaller">Genres:</h6>
             <div className="genreInline">
                 {genres &&
                     genres.map(bubble => (
@@ -40,7 +40,9 @@ export default function RelatedArtists(props) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <p>{bubble.gen.genre}</p>
+                                <h6 className="evenSmaller blackColor">
+                                    {bubble.gen.genre}
+                                </h6>
                             </a>
                         </div>
                     ))}

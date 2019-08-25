@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "./axios";
 import RelatedArtists from "./relatedArtists";
+import { Spring } from "react-spring/renderprops";
+import ShowTopArtists from "./showTopArtists";
 
 export default class CreatePlaylist extends React.Component {
     constructor(props) {
@@ -82,81 +84,131 @@ export default class CreatePlaylist extends React.Component {
                 <div>
                     <div className="searchWrapper">
                         <div className="searchField">
-                            <h2 className="textBlock">Input Artist Name</h2>
-                            <br />
-                            {this.state.nothingFound && (
-                                <div className="white">
-                                    Nothing Found. Name must be exactly like it
-                                    is displayed at Spotify.
-                                </div>
-                            )}
-                            <br />
-                            <input
-                                type="text"
-                                placeholder="Artist Name"
-                                name="artistName"
-                                className="textInput"
-                                onChange={this.handleChange}
-                            />
-                            <br />
-                            <p
-                                className="searchButton"
-                                onClick={this.handleSubmit}
-                            >
-                                Search Artist
-                            </p>
-                            <br />
+                            <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                                {props => (
+                                    <div style={props}>
+                                        <h2 className="textBlock white">
+                                            Input Artist Name
+                                        </h2>
+
+                                        {this.state.nothingFound && (
+                                            <div className="white">
+                                                Nothing Found. Name must be
+                                                exactly like it is displayed at
+                                                Spotify.
+                                            </div>
+                                        )}
+
+                                        <input
+                                            type="text"
+                                            placeholder="Artist Name"
+                                            name="artistName"
+                                            className="textInput"
+                                            onChange={this.handleChange}
+                                        />
+                                        <br />
+                                        <p
+                                            className="searchButtonForArtist"
+                                            onClick={this.handleSubmit}
+                                        >
+                                            Search Artist
+                                        </p>
+                                        <br />
+                                    </div>
+                                )}
+                            </Spring>
                         </div>
                     </div>
-                    <hr className="horiLine" />
+
+                    {!this.state.showResultOfSearch && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                            {props => (
+                                <div style={props}>
+                                    <div className="uniqueColor">
+                                        <ShowTopArtists className="uniqueColor" />
+                                    </div>
+                                </div>
+                            )}
+                        </Spring>
+                    )}
+
                     {this.state.showResultOfSearch && (
                         <div>
-                            <div className="resultOfSearchArtist">
-                                <h1>Result of Search Artist</h1>
-                                <h2>
-                                    Artist Name: {this.state.SearchArtistName}
-                                </h2>
+                            <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                                {props => (
+                                    <div style={props}>
+                                        <div className="resultOfSearchArtist">
+                                            <br />
+                                            <h2 className="textBlock white">
+                                                Result of Search Artist
+                                            </h2>
+                                            <h2 className="textBlock white">
+                                                {this.state.SearchArtistName}
+                                            </h2>
+                                            <a
+                                                href={
+                                                    this.state.SearchArtistUrl
+                                                }
+                                                rel="noopener noreferrer"
+                                                target="_blank"
+                                            >
+                                                <img
+                                                    src={
+                                                        this.state
+                                                            .SearchArtistPicture
+                                                    }
+                                                    className="ArtistPicture"
+                                                />
+                                            </a>
 
-                                <a
-                                    href={this.state.SearchArtistUrl}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                >
-                                    <img
-                                        src={this.state.SearchArtistPicture}
-                                        className="ArtistPicture"
-                                    />
-                                </a>
-                                <p>Artist Id:</p>
-                                <p>{this.state.IdOfArtist}</p>
-
-                                <div className="buttonSearchWrapper">
-                                    <p
-                                        className="conButton"
-                                        onClick={this.clearSearch}
-                                    >
-                                        Clear Search
-                                    </p>
-                                    <p
-                                        className="conButton"
-                                        onClick={this.getRelatedArtists}
-                                    >
-                                        Yes, thats perfect! Get me the related
-                                        Artists!
-                                    </p>
-                                </div>
-                            </div>
+                                            <div className="buttonSearchWrapper">
+                                                <p
+                                                    className="conButton"
+                                                    onClick={this.clearSearch}
+                                                >
+                                                    Clear Search
+                                                </p>
+                                                {!this.state.showRelated && (
+                                                    <p
+                                                        className="conButton"
+                                                        onClick={
+                                                            this
+                                                                .getRelatedArtists
+                                                        }
+                                                    >
+                                                        Yes, thats perfect! Get
+                                                        me the related Artists!
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Spring>
 
                             {this.state.showRelated && (
                                 <div>
-                                    <div>
-                                        <RelatedArtists
-                                            artistId={this.state.IdOfArtist}
-                                            searchArtistName={
-                                                this.state.SearchArtistName
-                                            }
-                                        />
-                                    </div>
+                                    <Spring
+                                        from={{ opacity: 0 }}
+                                        to={{ opacity: 1 }}
+                                    >
+                                        {props => (
+                                            <div style={props}>
+                                                <div>
+                                                    <RelatedArtists
+                                                        artistId={
+                                                            this.state
+                                                                .IdOfArtist
+                                                        }
+                                                        searchArtistName={
+                                                            this.state
+                                                                .SearchArtistName
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Spring>
                                 </div>
                             )}
                         </div>

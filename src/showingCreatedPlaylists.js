@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
-// import { useTrail, animated as a } from "react-spring";
-//
-// const config = { mass: 5, tension: 2000, friction: 200 };
+import { useTrail, animated as a } from "react-spring";
+
+const config = { mass: 5, tension: 2000, friction: 200, duration: 500 };
 
 export default function ShowingCreatedPlaylists() {
-    const [myList, setPlaylists] = useState();
+    const [myList, setPlaylists] = useState([]);
     const [toggleList, setToggleList] = useState(0);
     const [showButton, setButton] = useState(true);
 
@@ -54,14 +54,12 @@ export default function ShowingCreatedPlaylists() {
         [toggleList]
     );
 
-    // const trail = useTrail(myList.length, {
-    //     config,
-    //     opacity: toggleList ? 1 : 0,
-    //     transform: toggleList
-    //         ? "translate3d(0px,0,0)"
-    //         : "translate3d(-10px,0,0)",
-    //     from: { opacity: 0, transform: "translate3d(-10px,0,0)" }
-    // });
+    const trail = useTrail(myList.length, {
+        config,
+        opacity: 1,
+        transform: "translate3d(0px,0,0)",
+        from: { opacity: 0.5, transform: "translate3d(0,-10px,0)" }
+    });
 
     return (
         <div className="playlistsWrapper">
@@ -69,25 +67,34 @@ export default function ShowingCreatedPlaylists() {
                 Users created Playlists for Artists like...
             </h3>
             <div className="playlistsInline">
-                {myList &&
-                    myList.map(list => (
-                        <div key={list.id} className="playlistCard">
+                {trail.map((props, index) => {
+                    return (
+                        <a.div
+                            key={myList[index]}
+                            style={props}
+                            className="playlistCard"
+                        >
                             <a
-                                href={list.playlisturl}
+                                href={myList[index].playlisturl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <img
-                                    src={list.artistpic}
+                                    src={myList[index].artistpic}
                                     height="100px"
                                     width="100px"
                                 />
                             </a>
 
-                            <p className="evenbolder">{list.mainartist}</p>
-                            <p>Created by: {list.spotify_id}</p>
-                        </div>
-                    ))}
+                            <h4 className="evenbolder">
+                                {myList[index].mainartist}
+                            </h4>
+                            <h6 className="evenSmaller">
+                                Created by: {myList[index].spotify_id}
+                            </h6>
+                        </a.div>
+                    );
+                })}
             </div>
             {showButton && (
                 <div>

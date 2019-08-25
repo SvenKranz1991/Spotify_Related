@@ -55,16 +55,39 @@ h1 {
     cursor: pointer;
     transition-timing-function: ease;
     transition: 0.4s;
+    margin: 40px;
 }
 
 .getMorePlaylists-btn:hover {
     color: #01ff70;
+    -webkit-animation: mover 0.7s infinite alternate;
+    animation: mover 0.7s infinite alternate;
+}
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
 }
 
 /* Button Temp */
 
 .horiLine {
     width: 50vh;
+}
+
+.uniqueColor {
+    background-color: #01ff70;
 }
 
 .button {
@@ -85,11 +108,13 @@ h1 {
 
 .textInput {
     text-align: center;
-    height: 4vh;
+    height: 3vh;
     width: 30vh;
     outline: none;
-    border: 3px solid #cccccc;
+    border: 1px solid #ff851b;
     resize: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border-radius: 20px;
 }
 
@@ -119,7 +144,7 @@ h1 {
 /* NAVIGATION */
 
 .navigation {
-    height: 50px;
+    height: 48px;
     width: 100%;
     background-color: #111111;
     border-bottom: 1px solid #111111;
@@ -142,15 +167,33 @@ h1 {
     text-decoration: none;
     font-weight: lighter;
     letter-spacing: -1px;
+    font-size: 0.9rem;
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
 }
 
 .userProfile p {
-    font-size: 15px;
+    font-size: 0.9rem;
     color: #ffffff;
 }
 
-.navigation-links a:hover {
-    text-decoration: underline;
+.navigation-links a:hover:before {
+    opacity: 1;
+    width: 100%;
+}
+.navigation-links a:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 90%;
+    border-bottom: 1px solid #dcdcdc;
+    transition: all 300ms ease-in-out;
+    opacity: 0;
 }
 
 .navigation-links {
@@ -164,13 +207,13 @@ h1 {
 }
 
 .logoinnav {
-    height: 50px;
     width: 50px;
     float: left;
     font-weight: bold;
     background-color: #111111;
     color: #ffffff;
-    transform: translateX(-40%);
+    margin: 0;
+    margin-left: 40px;
 }
 
 .profilePic {
@@ -181,11 +224,16 @@ h1 {
 
 .userProfile {
     display: inline-flex;
+    white-space: nowrap;
+    margin: 0;
 }
 
 .userProfile p {
-    margin-right: 10px;
+    margin: 0;
+    margin-left: 30vw;
     font-weight: lighter;
+    width: 30px;
+    white-space: nowrap;
 }
 
 /* LANDING PAGE */
@@ -301,6 +349,33 @@ h1 {
     font-weight: bold;
 }
 
+/* OnHover */
+
+/* .middle {
+    transition: 0.5s ease;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -25%);
+    -ms-transform: translate(-50%, -25%);
+    text-align: center;
+}
+
+.container:hover .image {
+    opacity: 0.3;
+}
+
+.container:hover .middle {
+    opacity: 1;
+}
+
+.text {
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+} */
+
 /* PLAYLIST CREATED SECTION */
 
 .playlistsWrapper {
@@ -348,7 +423,18 @@ h1 {
 }
 
 .evenbolder {
-    font-weight: bold;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.evenSmaller {
+    color: #ffffff;
+    font-weight: lighter;
+    margin-top: 5px;
+}
+
+.blackColor {
+    color: #111111;
 }
 
 /* OVERLAY EFFECT */
@@ -413,7 +499,8 @@ h1 {
 
 .textBlock {
     color: #111111;
-    padding: 30px;
+    padding: 20px;
+    margin-bottom: 0;
     font-size: 30px;
     font-weight: bolder;
     font-style: italic;
@@ -424,32 +511,30 @@ h1 {
     height: 38px;
 }
 
-.searchButton {
+.searchButtonForArtist {
     width: 200px;
-    background-color: #111111;
-    margin-top: 20px;
-    color: #ffffff;
+    margin-top: 10px;
     font-weight: lighter;
-    padding: 10px;
-    font-size: 14px;
+    padding: 8px;
+    font-size: 12px;
     padding-left: 30px;
     padding-right: 30px;
     text-decoration: none;
     border-radius: 20px;
     cursor: pointer;
-    opacity: 0.8;
-    transition: 0.3s;
+    background-color: #111111;
+    border: 0.1px dashed #ce6868;
+    color: #ffffff;
+    outline: none;
 }
 
 .searchButton:hover {
-    opacity: 1;
-    font-weight: bold;
 }
 
 /* ArtistSearch */
 
 .white {
-    color: white;
+    color: #ffffff;
 }
 
 .compGeneratePlaylistWrapper {
@@ -458,7 +543,7 @@ h1 {
 }
 
 .resultOfSearchArtist {
-    height: 500px;
+    height: 550px;
     background-color: #2ecc40;
     width: 100%;
     margin-bottom: 0;
@@ -502,7 +587,6 @@ h1 {
 
 .conButton:hover {
     opacity: 1;
-    font-weight: bold;
 }
 
 /* RelatedArtists */
@@ -535,7 +619,7 @@ h1 {
 
 .relatedArtistsCard {
     background-color: inherit;
-    height: 600px;
+    height: 450px;
     width: 200px;
     margin: auto;
     text-align: center;
@@ -566,6 +650,7 @@ h1 {
 .genreBubble {
     background-color: #ffffff;
     border-radius: 20px;
+    padding: 2px;
 }
 
 .genreBubble p {
@@ -590,7 +675,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0px -200px 183px 108px rgba(255, 255, 255, 1);
+    box-shadow: 0px -100px 183px 108px rgba(255, 255, 255, 1);
 }
 
 .createTitle h2 {
@@ -630,6 +715,10 @@ h1 {
 
 /* SearchTitle in Audio Feature */
 
+.searchTitleContainer {
+    width: 100%;
+}
+
 .searchTitle {
     color: #111111;
     padding: 30px;
@@ -639,7 +728,7 @@ h1 {
 }
 
 .searchTitleWrapper {
-    background-color: #ff851b;
+    background-color: #01ff70;
     height: 400px;
     width: 100%;
     display: flex;
@@ -650,6 +739,8 @@ h1 {
 .searchTitle input {
     width: 250px;
     height: 38px;
+    border: 1px solid #01ff70;
+    outline: none;
 }
 
 .searchTitle h1 {
@@ -667,11 +758,11 @@ h1 {
     padding-left: 30px;
     padding-right: 30px;
     text-decoration: none;
+    outline: none;
     border-radius: 20px;
     cursor: pointer;
     opacity: 0.8;
     transition: 0.3s;
-    outline: none;
 }
 
 .searchButton:hover {
