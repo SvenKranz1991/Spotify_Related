@@ -41,6 +41,10 @@
     margin: auto;
 }
 
+body {
+    min-width: 1024px;
+}
+
 /* Horizontal Line */
 
 h1 {

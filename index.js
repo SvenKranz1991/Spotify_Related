@@ -76,15 +76,15 @@ const SpotifyWebApi = require("spotify-web-api-node");
 const spotifyApi = new SpotifyWebApi({
     clientId: "fcecfc72172e4cd267473117a17cbd4d",
     clientSecret: "a6338157c9bb5ac9c71924cb2940e1a7",
-    redirectUri: "https://spotifyrelated.herokuapp.com/callback"
+    redirectUri: "http://localhost:8080/callback"
 });
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////////////////////////
 
-// const { Client_ID, Client_Secret } = require("./secrets");
+const { Client_ID, Client_Secret } = require("./secrets");
 
-const Client_ID = process.env.Client_ID;
-const Client_Secret = process.env.Client_Secret;
+// const Client_ID = process.env.Client_ID;
+// const Client_Secret = process.env.Client_Secret;
 
 ////////////////////// MY ACCESS TOKEN ////////////////////////////////////
 
@@ -102,7 +102,7 @@ passport.use(
         {
             clientID: Client_ID,
             clientSecret: Client_Secret,
-            callbackURL: "https://spotifyrelated.herokuapp.com/callback"
+            callbackURL: "http://localhost:8080/callback"
         },
         function(accessToken, refreshToken, expires_in, profile, done) {
             console.log("uAT in Use: ", userAccessToken);
@@ -1098,11 +1098,11 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-// app.listen(8080, function() {
-//     console.log("I'm listening on 8080.");
-// });
+app.listen(8080, function() {
+    console.log("I'm listening on 8080.");
+});
 
-app.listen(process.env.PORT || 8080);
+// app.listen(process.env.PORT || 8080);
 
 //////////// Middleware ensures Auth ////////////////
 
