@@ -60,7 +60,7 @@ You just need to have your Spotify Logins ready for the OAuth process.
 
 ## Authors
 
--   **Sven Kranz** - [SvenKranz1991](https://github.com/SvenKranz1991)
+-   **Sven Kranz** - [SvenKranz1991](https://github.com/SvenKranz1991)[LinkedIn](https://www.linkedin.com/in/sven-kranz-a2389318b/)[Website](www.google.com)
 
 ## License
 
