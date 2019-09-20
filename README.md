@@ -38,13 +38,17 @@ spotifyrelated.herokuapp.com
 -   [Spotify-Web-API-Node](https://www.npmjs.com/package/spotify-web-api-node)
 -   [Passport-Spotify](https://github.com/JMPerez/passport-spotify)
 
+## The "Create Playlist" - Process
+
 ->![Create Playlist - Process](readmegifs/Gif_1_640px_CreatePlaylist.gif)<-
 
-->![](readmegifs/Gif_1_640px_TrackListData.gif)<-
+## Displaying Audio Features from every Track from the created Playlist
 
-### Break down into end to end tests
+->![Showing the Data of each Track in created Playlist](readmegifs/Gif_1_640px_TrackListData.gif)<-
 
-->![](readmegifs/Gif_1_640px_SingleData.gif)<-
+### Show Data of a specific Track from Spotify's "Audio Features" - Endpoint
+
+->![Getting Data of a specific Track - Process](readmegifs/Gif_1_640px_SingleData.gif)<-
 
 ## Authors
 
@@ -56,4 +60,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
--   Acknowledgment
+-   Thank god for the really good documentation from Spotify. It was a really great resource, while developing.
