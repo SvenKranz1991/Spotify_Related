@@ -1,7 +1,5 @@
 # "Spotify-Related"
 
-## General
-
 Spotify-Related is a SPA / Website, where I wanted to make a Custom Playlist Generator that satisfies my taste as a music lover.
 
 I also wanted to display those valuable Informations Spotify provides for each Track.
@@ -12,6 +10,8 @@ like
 
 Especially the data was of high interested for me, since as a Sound Designer I was curious to see how and what Spotify stores about each track.
 
+->![](readmegifs/Gif_1_640px_Login.gif)<-
+
 ## Getting Started
 
 I deployed the website on Heroku. So no need for cloning the repo. _yay_
@@ -21,11 +21,13 @@ You just need to have your Spotify Logins ready for the OAuth process.
 spotifyrelated.herokuapp.com
 ```
 
-->![](readmegifs/Gif_1_640px_Login.gif)<-
+### Tech-Stack Used
 
-### Prerequisites
+Javascript(ES6) | React.js | PostgreSQL | Node.js | Express.js
 
-What things you need to install the software and how to install them
+Additional Libraries:
+[Victory.js](https://formidable.com/open-source/victory/) (for Data Visualization) | [Passport-Spotify](https://github.com/JMPerez/passport-spotify) | [Spotify-Web-API-Node](https://www.npmjs.com/package/spotify-web-api-node)
+[React-Spring](https://www.react-spring.io/) (for Animations)
 
 ```
 Give examples
