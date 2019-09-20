@@ -27,7 +27,7 @@ Especially the latter part was of high interested for me, since as a Sound Desig
 I deployed the website on Heroku. So no need for cloning the repo. _yay_
 You just need to have your Spotify Logins ready for the OAuth process.
 
-[Spotify Related on Heroku](spotifyrelated.herokuapp.com)
+[Spotify Related on Heroku](https://www.spotifyrelated.herokuapp.com)
 
 ## Built With
 
