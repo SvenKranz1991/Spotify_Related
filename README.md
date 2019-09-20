@@ -3,12 +3,14 @@
 Spotify-Related is a SPA / Website, where I wanted to make a Custom Playlist Generator that satisfies my taste as a music lover.
 
 I also wanted to display those valuable Informations Spotify provides for each Track.
-like
-...the Key and Tempo of every Song
-...the average Loudness
-...the analysis Spotify makes for every Track
 
-Especially the data was of high interested for me, since as a Sound Designer I was curious to see how and what Spotify stores about each track.
+#### The Data I was Interested In from the "Audio Features" - Endpoint that Spotify provided
+
+-   the Key and Tempo of every Song
+-   the average Loudness
+-   the Analysis Spotify makes for every Track
+
+Especially the latter part was of high interested for me, since as a Sound Designer I was curious to see how and what Spotify stores about each track.
 
 ![The Login Process and Overview of Landing Page](readmegifs/Gif_1_640px_Login.gif)
 
@@ -40,15 +42,15 @@ spotifyrelated.herokuapp.com
 
 ## The "Create Playlist" - Process
 
-->![Create Playlist - Process](readmegifs/Gif_1_640px_CreatePlaylist.gif)<-
+![Create Playlist - Process](readmegifs/Gif_1_640px_CreatePlaylist.gif)
 
 ## Displaying Audio Features from every Track from the created Playlist
 
-->![Showing the Data of each Track in created Playlist](readmegifs/Gif_1_640px_TrackListData.gif)<-
+![Showing the Data of each Track in created Playlist](readmegifs/Gif_1_640px_TrackListData.gif)
 
 ### Show Data of a specific Track from Spotify's "Audio Features" - Endpoint
 
-->![Getting Data of a specific Track - Process](readmegifs/Gif_1_640px_SingleData.gif)<-
+![Getting Data of a specific Track - Process](readmegifs/Gif_1_640px_SingleData.gif)
 
 ## Authors
 
