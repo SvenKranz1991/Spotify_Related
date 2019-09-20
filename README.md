@@ -1,5 +1,7 @@
 # "Spotify-Related"
 
+## General
+
 Spotify-Related is a SPA / Website, where I wanted to make a Custom Playlist Generator that satisfies my taste as a music lover.
 
 I also wanted to display those valuable Informations Spotify provides for each Track.
