@@ -10,7 +10,7 @@ like
 
 Especially the data was of high interested for me, since as a Sound Designer I was curious to see how and what Spotify stores about each track.
 
-->![](readmegifs/Gif_1_640px_Login.gif)<-
+![The Login Process and Overview of Landing Page](readmegifs/Gif_1_640px_Login.gif)
 
 ## Getting Started
 
@@ -21,79 +21,30 @@ You just need to have your Spotify Logins ready for the OAuth process.
 spotifyrelated.herokuapp.com
 ```
 
-### Tech-Stack Used
+## Built With
 
-Javascript(ES6) | React.js | PostgreSQL | Node.js | Express.js
+### Frontend
 
-Additional Libraries:
-[Victory.js](https://formidable.com/open-source/victory/) (for Data Visualization) | [Passport-Spotify](https://github.com/JMPerez/passport-spotify) | [Spotify-Web-API-Node](https://www.npmjs.com/package/spotify-web-api-node)
-[React-Spring](https://www.react-spring.io/) (for Animations)
+-   React.js
+-   [Victory.js](https://formidable.com/open-source/victory/) (for Data Visualization)
+-   [React-Spring](https://www.react-spring.io/) (for Animations)
+-   CSS3
 
-```
-Give examples
-```
+### Backend
 
-### Installing
+-   Node.js
+-   Express.js
+-   PostgreSQL
+-   [Spotify-Web-API-Node](https://www.npmjs.com/package/spotify-web-api-node)
+-   [Passport-Spotify](https://github.com/JMPerez/passport-spotify)
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-->![](readmegifs/Gif_1_640px_CreatePlaylist.gif)<-
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
+->![Create Playlist - Process](readmegifs/Gif_1_640px_CreatePlaylist.gif)<-
 
 ->![](readmegifs/Gif_1_640px_TrackListData.gif)<-
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ->![](readmegifs/Gif_1_640px_SingleData.gif)<-
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
--   [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
--   [Maven](https://maven.apache.org/) - Dependency Management
--   [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
@@ -105,6 +56,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
--   Hat tip to anyone whose code was used
--   Inspiration
--   etc
+-   Acknowledgment
