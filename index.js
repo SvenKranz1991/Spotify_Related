@@ -68,12 +68,12 @@ passport.deserializeUser(function(obj, done) {
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////
 
-// const Client_ID = process.env.Client_ID;
-// const Client_Secret = process.env.Client_Secret;
+const Client_ID = process.env.Client_ID;
+const Client_Secret = process.env.Client_Secret;
 
 const SpotifyWebApi = require("spotify-web-api-node");
 
-const { Client_ID, Client_Secret } = require("./secrets");
+// const { Client_ID, Client_Secret } = require("./secrets");
 
 // change callbackURL
 // https://spotifyrelated.herokuapp.com/callback
