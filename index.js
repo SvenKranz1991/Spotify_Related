@@ -66,7 +66,14 @@ passport.deserializeUser(function(obj, done) {
 
 /////////////////// SETUP Spotify-Web-Api-Node //////////////////////////////
 
+////////////////////// MY SPOTIFY CREDENTIALS ///////////
+
+// const Client_ID = process.env.Client_ID;
+// const Client_Secret = process.env.Client_Secret;
+
 const SpotifyWebApi = require("spotify-web-api-node");
+
+const { Client_ID, Client_Secret } = require("./secrets");
 
 // change callbackURL
 // https://spotifyrelated.herokuapp.com/callback
@@ -74,17 +81,10 @@ const SpotifyWebApi = require("spotify-web-api-node");
 
 // credentials are optional
 const spotifyApi = new SpotifyWebApi({
-    clientId: "fcecfc72172e4cd267473117a17cbd4d",
-    clientSecret: "a6338157c9bb5ac9c71924cb2940e1a7",
-    redirectUri: "http://localhost:8080/callback"
+    clientId: Client_ID,
+    clientSecret: Client_Secret,
+    redirectUri: "https://spotifyrelated.herokuapp.com/callback"
 });
-
-////////////////////// MY SPOTIFY CREDENTIALS ///////////////////////////////
-
-const { Client_ID, Client_Secret } = require("./secrets");
-
-// const Client_ID = process.env.Client_ID;
-// const Client_Secret = process.env.Client_Secret;
 
 ////////////////////// MY ACCESS TOKEN ////////////////////////////////////
 
@@ -1098,8 +1098,8 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.listen(8080, function() {
-    console.log("I'm listening on 8080.");
+app.listen(process.env.PORT || 8080, function() {
+    console.log("I'm listening on 8080 or process.env.PORT");
 });
 
 // app.listen(process.env.PORT || 8080);
