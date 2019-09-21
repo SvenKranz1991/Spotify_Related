@@ -67,7 +67,7 @@ passport.deserializeUser(function(obj, done) {
 /////////////////// SETUP Spotify-Web-Api-Node //////////////////////////////
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////
-// WARNING : Rewrite this section if something goes wrong
+// WARNING : Rewrite this section if something goes wrong - you know
 // const Client_ID = process.env.Client_ID;
 // const Client_Secret = process.env.Client_Secret;
 
