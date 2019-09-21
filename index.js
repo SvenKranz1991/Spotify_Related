@@ -68,10 +68,20 @@ passport.deserializeUser(function(obj, done) {
 
 ////////////////////// MY SPOTIFY CREDENTIALS ///////////
 
-const Client_ID = process.env.Client_ID;
-const Client_Secret = process.env.Client_Secret;
+// const Client_ID = process.env.Client_ID;
+// const Client_Secret = process.env.Client_Secret;
 
 const SpotifyWebApi = require("spotify-web-api-node");
+
+let redirectUri;
+let secrets;
+if (process.env.NODE_ENV == "production") {
+    secrets = process.env; // in prod the secrets are environment variables
+    redirectUri = "https://spotifyrelated.herokuapp.com/callback";
+} else {
+    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+    redirectUri = "http://localhost:8080/callback";
+}
 
 // const { Client_ID, Client_Secret } = require("./secrets");
 
@@ -81,9 +91,9 @@ const SpotifyWebApi = require("spotify-web-api-node");
 
 // credentials are optional
 const spotifyApi = new SpotifyWebApi({
-    clientId: Client_ID,
-    clientSecret: Client_Secret,
-    redirectUri: "https://spotifyrelated.herokuapp.com/callback"
+    clientId: secrets.Client_ID,
+    clientSecret: secrets.Client_Secret,
+    redirectUri: redirectUri
 });
 
 ////////////////////// MY ACCESS TOKEN ////////////////////////////////////
@@ -100,9 +110,9 @@ let userEmail = "";
 passport.use(
     new SpotifyStrategy(
         {
-            clientID: Client_ID,
-            clientSecret: Client_Secret,
-            callbackURL: "https://spotifyrelated.herokuapp.com/callback"
+            clientID: secrets.Client_ID,
+            clientSecret: secrets.Client_Secret,
+            callbackURL: redirectUri
         },
         function(accessToken, refreshToken, expires_in, profile, done) {
             console.log("uAT in Use: ", userAccessToken);
