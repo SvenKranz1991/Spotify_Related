@@ -102,7 +102,7 @@ passport.use(
         {
             clientID: Client_ID,
             clientSecret: Client_Secret,
-            callbackURL: "http://localhost:8080/callback"
+            callbackURL: "https://spotifyrelated.herokuapp.com/callback"
         },
         function(accessToken, refreshToken, expires_in, profile, done) {
             console.log("uAT in Use: ", userAccessToken);
