@@ -20,7 +20,7 @@
         "@hh.ru/react-d3-chart-graphs": "^6.0.1",
         "@testing-library/react": "^8.0.1",
         "aws-sdk": "^2.497.0",
-        "axios": "^0.19.0",
+        "axios": "^0.21.1",
         "babel-loader": "^8.0.5",
         "base64-img": "^1.0.4",
         "base64url": "^3.0.1",
